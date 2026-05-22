@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Energieprofiel Analyse</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
 <style>
 :root{
   --cream:#faf9f7;--white:#ffffff;--border:#e8e4de;--border2:#d4cfc8;
@@ -24,7 +26,6 @@ html{scroll-behavior:smooth;}
 body{font-family:var(--sans);background:var(--cream);color:var(--text);font-size:14px;line-height:1.72;}
 .hidden{display:none!important;}
 
-/* TOPBAR */
 .topbar{background:var(--white);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
 .logo{display:flex;align-items:center;gap:10px;}
 .logo-block{width:32px;height:32px;background:var(--accent);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;letter-spacing:-.5px;}
@@ -33,32 +34,24 @@ body{font-family:var(--sans);background:var(--cream);color:var(--text);font-size
 .topbar-right{display:flex;align-items:center;gap:8px;}
 .meta-badge{font-size:11px;font-weight:500;color:var(--text3);background:var(--cream);border:1px solid var(--border);padding:2px 8px;border-radius:20px;}
 
-/* SHELL */
 .shell{max-width:1000px;margin:0 auto;padding:36px 40px 80px;}
-
-/* SECTION EYEBROW */
 .section-eyebrow{font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
 .section-eyebrow::after{content:'';flex:1;height:1px;background:var(--accent-b);}
 
-/* HEADINGS */
 h1{font-size:24px;font-weight:700;color:var(--text);line-height:1.2;letter-spacing:-.5px;margin-bottom:6px;}
 h1 em{font-style:italic;font-weight:300;color:var(--text2);}
-.lead{font-size:13.5px;font-weight:300;color:var(--text2);line-height:1.7;margin-bottom:20px;max-width:600px;}
+.lead{font-size:13.5px;font-weight:300;color:var(--text2);line-height:1.7;margin-bottom:20px;max-width:650px;}
 h2{font-size:15px;font-weight:600;color:var(--text);margin:28px 0 12px;padding-bottom:8px;border-bottom:1.5px solid var(--border);}
 h2 .h2-num{font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-s);border:1px solid var(--accent-b);padding:1px 6px;border-radius:3px;margin-right:4px;}
 
-/* INFO BLOCKS */
 .ib{background:var(--accent-s);border-left:3px solid var(--accent);padding:10px 14px;margin:12px 0;font-size:12.5px;color:var(--text2);font-weight:300;border-radius:0 var(--r) var(--r) 0;}
-.ib strong{color:var(--text);font-weight:600;}
 .nb{background:var(--blue-s);border-left:3px solid var(--blue);padding:10px 14px;margin:12px 0;font-size:12.5px;color:var(--text2);font-weight:300;border-radius:0 var(--r) var(--r) 0;}
 
-/* UPLOAD */
 .upload-zone{background:var(--white);border:2px dashed var(--border2);border-radius:var(--r);padding:48px 40px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;}
 .upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:var(--accent-s);}
 .upload-zone-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;}
 .upload-zone-sub{font-size:12px;color:var(--text3);font-weight:300;margin-bottom:16px;}
 
-/* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12px;font-weight:500;padding:8px 18px;border-radius:var(--r);border:none;cursor:pointer;transition:all .13s;}
 .btn-primary{background:var(--accent);color:#fff;}
 .btn-primary:hover{background:#c9611a;}
@@ -67,10 +60,8 @@ h2 .h2-num{font-size:10px;font-weight:700;color:var(--accent);background:var(--a
 .btn-outline{background:transparent;color:var(--text3);border:1px solid var(--border);}
 .btn-outline:hover{border-color:var(--border2);color:var(--text2);}
 
-/* ── COMPACT MAPPING FORM ── */
 .mapping-form{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:12px;}
 .mapping-form-header{background:var(--cream);padding:10px 16px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.4px;text-transform:uppercase;}
-.mapping-rows{padding:0;}
 .map-row{display:grid;grid-template-columns:180px 1fr 80px;align-items:center;border-bottom:1px solid var(--border);min-height:38px;}
 .map-row:last-child{border-bottom:none;}
 .map-row-label{padding:0 14px;font-size:12px;color:var(--text2);font-weight:400;display:flex;align-items:center;gap:6px;border-right:1px solid var(--border);height:100%;}
@@ -81,17 +72,8 @@ h2 .h2-num{font-size:10px;font-weight:700;color:var(--accent);background:var(--a
 .col-select{width:100%;background:transparent;border:none;color:var(--text);padding:8px 0;font-family:var(--sans);font-size:12px;outline:none;cursor:pointer;}
 .col-select:focus{color:var(--accent);}
 
-/* COMPACT SETTINGS */
 .settings-compact{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:12px;}
 .settings-compact-header{background:var(--cream);padding:10px 16px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.4px;text-transform:uppercase;}
-.settings-row-compact{display:flex;flex-wrap:wrap;padding:12px 16px;gap:20px;border-bottom:1px solid var(--border);}
-.settings-row-compact:last-child{border-bottom:none;}
-.setting-inline{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
-.setting-inline label{white-space:nowrap;font-weight:400;}
-.setting-inline span.fixed-val{font-weight:600;color:var(--text);background:var(--cream);border:1px solid var(--border);padding:2px 8px;border-radius:3px;font-size:11.5px;}
-.setting-inline .slider-wrap{display:flex;align-items:center;gap:6px;}
-.slider{-webkit-appearance:none;height:3px;background:var(--border2);border-radius:2px;outline:none;cursor:pointer;width:80px;}
-.slider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--accent);cursor:pointer;}
 .ned-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;}
 .ned-status{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;}
 .ned-dot{width:7px;height:7px;border-radius:50%;background:var(--border2);}
@@ -106,16 +88,14 @@ h2 .h2-num{font-size:10px;font-weight:700;color:var(--accent);background:var(--a
 .ef-table tr:last-child td{border-bottom:none;}
 .ef-table td:first-child{color:var(--text2);width:200px;}
 .ef-table td:last-child{color:var(--text);font-weight:500;}
+.fixed-val{font-weight:600;color:var(--text);background:var(--cream);border:1px solid var(--border);padding:2px 8px;border-radius:3px;font-size:11.5px;}
 
-/* WARNINGS */
 .warnings-box{background:var(--red-s);border-left:3px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:10px 14px;margin:8px 0;font-size:12px;color:var(--text2);font-weight:300;line-height:1.8;}
 .warnings-box h4{color:var(--red);font-size:10.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
 
-/* ANALYSE BUTTON */
 .analyse-btn-wrap{margin:12px 0 20px;}
 .analyse-btn-wrap .btn{width:100%;justify-content:center;padding:11px;font-size:12.5px;}
 
-/* PREVIEW */
 .preview-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:20px;}
 .preview-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--border);background:var(--cream);}
 .preview-head span{font-size:10.5px;font-weight:600;color:var(--text2);letter-spacing:.4px;text-transform:uppercase;}
@@ -126,7 +106,6 @@ table.data-table td{padding:7px 12px;border-bottom:1px solid var(--border);color
 table.data-table tr:last-child td{border-bottom:none;}
 table.data-table tr:hover td{background:var(--cream);}
 
-/* KPI GRID */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:20px 0;}
 .kpi-card{background:var(--white);padding:16px 14px;}
 .kpi-label{font-size:9.5px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
@@ -141,7 +120,6 @@ table.data-table tr:hover td{background:var(--cream);}
 .kpi-card.green{border-top:2px solid var(--green);}
 .kpi-card.purple{border-top:2px solid var(--purple);}
 
-/* TABS */
 .tabs{display:flex;border-bottom:1.5px solid var(--border);margin-bottom:16px;}
 .tb{padding:8px 16px;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--text3);background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-1.5px;transition:all .12s;}
 .tb.on{color:var(--accent);border-bottom-color:var(--accent);}
@@ -149,7 +127,6 @@ table.data-table tr:hover td{background:var(--cream);}
 .tab-panel{display:none;}
 .tab-panel.on{display:block;}
 
-/* CHARTS */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
 .chart-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px;}
 .chart-card.wide{grid-column:1/-1;}
@@ -157,14 +134,12 @@ table.data-table tr:hover td{background:var(--cream);}
 .chart-wrap{position:relative;height:200px;}
 .chart-card.wide .chart-wrap{height:170px;}
 
-/* HEATMAP */
 .heatmap-scroll{overflow-x:auto;}
 table.hm-table{width:100%;border-collapse:collapse;font-size:9px;}
 table.hm-table th{padding:4px 2px;color:var(--text3);text-align:center;white-space:nowrap;border-bottom:1px solid var(--border);font-weight:500;}
 table.hm-table td{padding:2px 1px;text-align:center;border-radius:2px;min-width:26px;}
 table.hm-table .rl{text-align:right;padding-right:8px;color:var(--text3);font-size:9.5px;font-weight:500;background:transparent!important;}
 
-/* ACCORDION */
 .accordion{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin:6px 0;}
 .acc-head{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:var(--white);transition:background .13s;user-select:none;}
 .acc-head:hover{background:var(--cream);}
@@ -173,67 +148,45 @@ table.hm-table .rl{text-align:right;padding-right:8px;color:var(--text3);font-si
 .acc-num{font-size:9.5px;font-weight:700;color:var(--accent);background:var(--accent-s);border:1px solid var(--accent-b);padding:1px 6px;border-radius:3px;}
 .acc-num.blue{color:var(--blue);background:var(--blue-s);border-color:var(--blue-b);}
 .acc-num.green{color:var(--green);background:var(--green-s);border-color:var(--green-b);}
-.acc-num.purple{color:var(--purple);background:var(--purple-s);border-color:var(--purple-b);}
 .acc-icon{font-size:11px;color:var(--text3);transition:transform .2s;}
 .acc-head.open .acc-icon{transform:rotate(180deg);}
 .acc-body{display:none;border-top:1px solid var(--border);}
 .acc-body.open{display:block;}
 .acc-inner{padding:16px 18px;}
 .acc-inner p{font-size:12.5px;color:var(--text2);font-weight:300;margin-bottom:10px;line-height:1.7;}
-.acc-inner strong{color:var(--text);font-weight:600;}
-.acc-inner ul,.acc-inner ol{padding-left:16px;margin-bottom:10px;}
-.acc-inner li{font-size:12.5px;color:var(--text2);font-weight:300;margin-bottom:3px;}
 .val-block{background:var(--cream);border:1px solid var(--border);border-radius:var(--r);padding:10px 14px;margin-top:10px;font-size:11.5px;color:var(--text2);line-height:2.2;}
 .val-block span{color:var(--accent);font-weight:600;}
-code{background:#f0ede8;border:1px solid var(--border2);padding:1px 5px;border-radius:3px;font-family:'Courier New',monospace;font-size:11.5px;color:var(--blue);}
 
-/* WEii INDICATOR TABLE */
-.weii-table{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;}
-.weii-table th{background:var(--cream);color:var(--text2);font-weight:600;font-size:10px;letter-spacing:.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid var(--border2);}
-.weii-table td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-weight:300;vertical-align:top;}
-.weii-table tr:last-child td{border-bottom:none;}
-.weii-table td strong{color:var(--text);font-weight:600;}
-.weii-tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:3px;white-space:nowrap;}
-.weii-tag.a{background:var(--accent-s);color:var(--accent);border:1px solid var(--accent-b);}
-.weii-tag.b{background:var(--blue-s);color:var(--blue);border:1px solid var(--blue-b);}
-.weii-tag.g{background:var(--green-s);color:var(--green);border:1px solid var(--green-b);}
-.weii-tag.p{background:var(--purple-s);color:var(--purple);border:1px solid var(--purple-b);}
-
-/* WEii CLASS BADGE */
-.class-badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:3px;font-size:11px;font-weight:600;}
-.cls-weng{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;}
-.cls-paris{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0;}
-.cls-zzuinig{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;}
-.cls-zuinig{background:#eff6ff;color:#1d4ed8;border:1px solid #dbeafe;}
-.cls-gemiddeld{background:var(--amber-s);color:var(--amber);border:1px solid var(--amber-b);}
-.cls-onzuinig{background:var(--red-s);color:var(--red);border:1px solid var(--red-b);}
-.cls-zonzuinig{background:#fee2e2;color:#991b1b;border:2px solid #fca5a5;}
-.cls-nvt{background:#f0ede8;color:var(--text3);}
-
-/* FORMULA BLOCK */
-.formula{background:var(--blue-s);border-left:3px solid var(--blue);padding:8px 12px;margin:8px 0;font-family:'Courier New',monospace;font-size:12px;color:var(--blue);border-radius:0 var(--r) var(--r) 0;}
-
-/* EXPORT */
 .export-row{display:flex;gap:8px;flex-wrap:wrap;padding-top:20px;margin-top:20px;border-top:1px solid var(--border);}
 
-/* LOADING */
 .loading-overlay{position:fixed;inset:0;background:rgba(250,249,247,.88);display:flex;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(3px);}
 .loading-inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
 .loading-spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-inner p{font-size:12px;color:var(--text3);font-weight:500;}
 
-@media(max-width:800px){.charts-grid{grid-template-columns:1fr;}.chart-card.wide{grid-column:auto;}.kpi-grid{grid-template-columns:repeat(2,1fr);}.shell{padding:20px 16px 60px;}.topbar{padding:0 16px;}.map-row{grid-template-columns:140px 1fr 70px;}}
+@media(max-width:800px){
+  .charts-grid{grid-template-columns:1fr;}
+  .chart-card.wide{grid-column:auto;}
+  .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .shell{padding:20px 16px 60px;}
+  .topbar{padding:0 16px;}
+  .map-row{grid-template-columns:140px 1fr 70px;}
+}
 #dashboard{animation:fadeUp .3s ease both;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
+
 <body>
 
 <header class="topbar">
   <div class="logo">
     <div class="logo-block">EP</div>
-    <div><div class="logo-name">Energieprofiel</div><div class="logo-sub">Analyse &amp; WEii dashboard</div></div>
+    <div>
+      <div class="logo-name">Energieprofiel</div>
+      <div class="logo-sub">Analyse &amp; dashboard</div>
+    </div>
   </div>
   <div class="topbar-right">
     <span class="meta-badge hidden" id="intervalBadge"></span>
@@ -244,790 +197,541 @@ code{background:#f0ede8;border:1px solid var(--border2);padding:1px 5px;border-r
 
 <div class="shell">
 
-<!-- UPLOAD -->
-<section id="uploadSection">
-  <div class="section-eyebrow">Stap 1</div>
-  <h1>Upload uw <em>energiedata</em></h1>
-  <p class="lead">Laad een Excel-bestand met per tijdstempel: elektraverbruik, warmteverbruik, gasverbruik en/of opwek. CO₂-emissiefactoren worden automatisch opgehaald via het Nationaal Energie Dashboard.</p>
-  <div class="upload-zone" id="dropZone">
-    <div class="upload-zone-title">Sleep een Excel-bestand hierheen</div>
-    <div class="upload-zone-sub">of klik om te bladeren — .xlsx, .xls</div>
-    <input type="file" id="fileInput" accept=".xlsx,.xls" hidden>
-    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">Bestand kiezen</button>
-  </div>
-</section>
+  <!-- UPLOAD -->
+  <section id="uploadSection">
+    <div class="section-eyebrow">Stap 1</div>
+    <h1>Upload uw <em>energiedata</em></h1>
+    <p class="lead">
+      Laad een Excel-bestand met per tijdstempel: elektraverbruik (kWh) en optioneel warmte (kWh), gas (m³), opwek (kWh),
+      plus eventueel prijs (€/kWh) of grid-signaal (0–1) voor Time-of-Use.
+    </p>
 
-<!-- MAPPING -->
-<section id="mappingSection" class="hidden" style="margin-top:28px;">
-  <div class="section-eyebrow">Stap 2</div>
-  <h1>Kolom-mapping &amp; <em>instellingen</em></h1>
-
-  <!-- Compact mapping form -->
-  <div class="mapping-form">
-    <div class="mapping-form-header">Kolomkoppeling</div>
-    <div class="mapping-rows">
-      <div class="map-row">
-        <div class="map-row-label">Tijdstempel</div>
-        <div class="map-row-select"><select id="colTimestamp" class="col-select"></select></div>
-        <div class="map-row-badge"><span class="req-tag">vereist</span></div>
-      </div>
-      <div class="map-row">
-        <div class="map-row-label">Elektraverbruik (kWh)</div>
-        <div class="map-row-select"><select id="colElektra" class="col-select"></select></div>
-        <div class="map-row-badge"><span class="req-tag">vereist</span></div>
-      </div>
-      <div class="map-row">
-        <div class="map-row-label">Warmteverbruik (kWh)</div>
-        <div class="map-row-select"><select id="colWarmte" class="col-select"><option value="">(geen)</option></select></div>
-        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
-      </div>
-      <div class="map-row">
-        <div class="map-row-label">Gasverbruik (m³)</div>
-        <div class="map-row-select"><select id="colGas" class="col-select"><option value="">(geen)</option></select></div>
-        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
-      </div>
-      <div class="map-row">
-        <div class="map-row-label">Opwek / teruglevering (kWh)</div>
-        <div class="map-row-select"><select id="colOpwek" class="col-select"><option value="">(geen)</option></select></div>
-        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
-      </div>
-      <div class="map-row">
-        <div class="map-row-label">Prijs (€/kWh)</div>
-        <div class="map-row-select"><select id="colPrice" class="col-select"><option value="">(geen)</option></select></div>
-        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
-      </div>
-      <div class="map-row">
-        <div class="map-row-label">Grid-signaal (0–1)</div>
-        <div class="map-row-select"><select id="colSignal" class="col-select"><option value="">(geen)</option></select></div>
-        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
-      </div>
+    <div class="upload-zone" id="dropZone">
+      <div class="upload-zone-title">Sleep een Excel-bestand hierheen</div>
+      <div class="upload-zone-sub">of klik om te bladeren — .xlsx, .xls</div>
+      <input type="file" id="fileInput" accept=".xlsx,.xls" hidden>
+      <button class="btn btn-primary" id="btnChooseFile">Bestand kiezen</button>
     </div>
-  </div>
+  </section>
 
-  <!-- Compact settings -->
-  <div class="settings-compact">
-    <div class="settings-compact-header">Instellingen</div>
+  <!-- MAPPING -->
+  <section id="mappingSection" class="hidden" style="margin-top:28px;">
+    <div class="section-eyebrow">Stap 2</div>
+    <h1>Kolom-mapping &amp; <em>instellingen</em></h1>
 
-    <!-- NED API -->
-    <div class="ned-row">
-      <span style="font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap;">NED API</span>
-      <div class="ned-status"><div class="ned-dot" id="nedDot"></div><span id="nedStatusText" style="font-size:11.5px;color:var(--text3);">Niet verbonden</span></div>
-      <input type="password" id="nedApiKey" class="txt-input" placeholder="API-sleutel" style="width:200px;">
-      <button class="btn btn-secondary" style="padding:5px 12px;font-size:11px;" onclick="testNedApi()">Verbinden</button>
-      <button class="btn btn-outline" style="padding:5px 12px;font-size:11px;" onclick="useDefaultEF()">Standaard EF</button>
-    </div>
-
-    <!-- Vaste emissiefactoren (WEii-protocol) -->
-    <div style="border-top:1px solid var(--border);">
-      <div style="padding:8px 16px 4px;font-size:10.5px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase;">Standaard emissiefactoren (WEii-protocol, jaarlijks bijgesteld via weii.nl)</div>
-      <table class="ef-table">
-        <tr><td>Elektriciteit</td><td><span class="fixed-val">389 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— Nederland 2024</span></td></tr>
-        <tr><td>Aardgas</td><td><span class="fixed-val">1,884 kg CO₂/m³</span> <span style="font-size:10.5px;color:var(--text3);">— 9,77 kWh/m³ × weegfactor 1</span></td></tr>
-        <tr><td>Warmte (stadsverwarming)</td><td><span class="fixed-val">220 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— weegfactor 0,33 (WEii Tabel 1)</span></td></tr>
-        <tr><td>Opwek (eigen PV)</td><td><span class="fixed-val">0 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— teruglevering gesaldeerd</span></td></tr>
-      </table>
-    </div>
-
-    <!-- Gebouwinstellingen voor WEii -->
-    <div class="settings-row-compact" style="border-top:1px solid var(--border);">
-      <div class="setting-inline">
-        <label>Gebruikstype</label>
-        <select id="weiiGebruikstype" class="col-select" style="background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;min-width:180px;">
-          <option value="">— kies gebruikstype —</option>
-          <option value="kantoor">Kantoor (70 | 100 | 150 | 230 | 330)</option>
-          <option value="restaurant">Restaurant (200 | 270 | 415 | 695 | 1075)</option>
-          <option value="cafe">Café (70 | 90 | 140 | 250 | 450)</option>
-          <option value="kinderopvang">Kinderopvang (50 | 80 | 130 | 195 | 285)</option>
-          <option value="sauna">Sauna (160 | 200 | 300 | 500 | 1330)</option>
-          <option value="bijeenkomst">Bijeenkomst overig (70 | 90 | 130 | 245 | 415)</option>
-          <option value="ziekenhuis">Ziekenhuis (100 | 135 | 185 | 315 | 500)</option>
-          <option value="tehuis">Tehuis met overnachting (80 | 115 | 160 | 285 | 455)</option>
-          <option value="praktijk">Medische praktijk (80 | 110 | 150 | 270 | 420)</option>
-          <option value="bedrijfshal">Bedrijfshal (-25 | -10 | 20 | 70 | 115)</option>
-          <option value="hotel">Hotel (110 | 140 | 210 | 375 | 640)</option>
-          <option value="onderwijs_basis">Basis/VO onderwijs (60 | 85 | 120 | 165 | 290)</option>
-          <option value="onderwijs_ho">MBO/HBO/Uni (70 | 90 | 125 | 225 | 380)</option>
-          <option value="sport_binnen">Sportaccommodatie binnen (70 | 90 | 140 | 245 | 435)</option>
-          <option value="zwembad">Zwembad (210 | 300 | 430 | 765 | 1365)</option>
-          <option value="winkel_koel">Winkel met warenkoeling (150 | 175 | 300 | 525 | 925)</option>
-          <option value="winkel">Winkel zonder warenkoeling (80 | 100 | 165 | 290 | 520)</option>
-          <option value="appartement">Appartement (45 | 65 | 100 | 150 | 180)</option>
-          <option value="woning">Grondgebonden woning (35 | 55 | 90 | 140 | 170)</option>
-        </select>
-      </div>
-      <div class="setting-inline">
-        <label>Gebruiksoppervlakte (m²)</label>
-        <input type="number" id="weiiAg" style="background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;width:90px;font-family:var(--sans);" placeholder="bijv. 1200" min="1">
-      </div>
-      <div class="setting-inline">
-        <label>Energielabel</label>
-        <select id="energielabel" style="background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;font-family:var(--sans);min-width:80px;"><option value="">— kies —</option><option value="A++++">A++++</option><option value="A+++">A+++</option><option value="A++">A++</option><option value="A+">A+</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select>
+    <div class="mapping-form">
+      <div class="mapping-form-header">Kolomkoppeling</div>
+      <div class="mapping-rows">
+        <div class="map-row">
+          <div class="map-row-label">Tijdstempel</div>
+          <div class="map-row-select"><select id="colTimestamp" class="col-select"></select></div>
+          <div class="map-row-badge"><span class="req-tag">vereist</span></div>
+        </div>
+        <div class="map-row">
+          <div class="map-row-label">Elektraverbruik (kWh)</div>
+          <div class="map-row-select"><select id="colElektra" class="col-select"></select></div>
+          <div class="map-row-badge"><span class="req-tag">vereist</span></div>
+        </div>
+        <div class="map-row">
+          <div class="map-row-label">Warmteverbruik (kWh)</div>
+          <div class="map-row-select"><select id="colWarmte" class="col-select"><option value="">(geen)</option></select></div>
+          <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+        </div>
+        <div class="map-row">
+          <div class="map-row-label">Gasverbruik (m³)</div>
+          <div class="map-row-select"><select id="colGas" class="col-select"><option value="">(geen)</option></select></div>
+          <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+        </div>
+        <div class="map-row">
+          <div class="map-row-label">Opwek / teruglevering (kWh)</div>
+          <div class="map-row-select"><select id="colOpwek" class="col-select"><option value="">(geen)</option></select></div>
+          <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+        </div>
+        <div class="map-row">
+          <div class="map-row-label">Prijs (€/kWh)</div>
+          <div class="map-row-select"><select id="colPrice" class="col-select"><option value="">(geen)</option></select></div>
+          <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+        </div>
+        <div class="map-row">
+          <div class="map-row-label">Grid-signaal (0–1)</div>
+          <div class="map-row-select"><select id="colSignal" class="col-select"><option value="">(geen)</option></select></div>
+          <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+        </div>
       </div>
     </div>
 
-    <!-- Flex scores: vaste waarden, hidden inputs voor JS-compatibiliteit -->
-    <input type="hidden" id="peakPct" value="10">
-    <input type="hidden" id="offpeakPct" value="10">
-  </div>
+    <div class="settings-compact">
+      <div class="settings-compact-header">Instellingen</div>
 
-  <div id="validationWarnings" class="warnings-box hidden"></div>
-
-  <div class="analyse-btn-wrap">
-    <button class="btn btn-primary" onclick="runAnalysis()">Analyseer dataset</button>
-  </div>
-
-  <div class="preview-wrap">
-    <div class="preview-head"><span>Preview — eerste 20 rijen</span></div>
-    <div class="table-scroll"><table id="previewTable" class="data-table"></table></div>
-  </div>
-</section>
-
-<!-- DASHBOARD -->
-<section id="dashboard" class="hidden" style="margin-top:28px;">
-
-  <div class="section-eyebrow">Resultaten</div>
-  <h1>Energieprofiel <em>analyse</em></h1>
-  <p class="lead" id="dashboardSubtitle"></p>
-
-  <!-- KPI kaarten -->
-  <div class="kpi-grid">
-    <div class="kpi-card accent">
-      <div class="kpi-label">Elektra totaal</div>
-      <div class="kpi-value" id="kpiElektra">—</div>
-      <div class="kpi-unit">kWh</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Warmte totaal</div>
-      <div class="kpi-value" id="kpiWarmte">—</div>
-      <div class="kpi-unit">kWh</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Gas totaal</div>
-      <div class="kpi-value" id="kpiGas">—</div>
-      <div class="kpi-unit">m³</div>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-label">Opwek totaal</div>
-      <div class="kpi-value" id="kpiOpwek">—</div>
-      <div class="kpi-unit">kWh</div>
-    </div>
-    <div class="kpi-card accent">
-      <div class="kpi-label">CO₂ uitstoot</div>
-      <div class="kpi-value" id="kpiCO2">—</div>
-      <div class="kpi-unit">kg CO₂</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">CO₂ intensiteit</div>
-      <div class="kpi-value" id="kpiCO2perKwh">—</div>
-      <div class="kpi-unit">g/kWh</div>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">Score Vlakheid</div>
-      <div class="kpi-value" id="kpiFlatness">—</div>
-      <div class="kpi-unit">/ 100 · PAR <span id="kpiPAR">—</span></div>
-      <div class="kpi-bar"><div class="kpi-fill blue" id="flatnessBar" style="width:0%"></div></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Score Time of Use</div>
-      <div class="kpi-value" id="kpiTOU">—</div>
-      <div class="kpi-unit">/ 100</div>
-      <div class="kpi-bar"><div class="kpi-fill" id="touBar" style="width:0%"></div></div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Score Flexibiliteit</div>
-      <div class="kpi-value" id="kpiFlex">—</div>
-      <div class="kpi-unit">/ 100</div>
-      <div class="kpi-bar"><div class="kpi-fill green" id="flexBar" style="width:0%"></div></div>
-    </div>
-    <div class="kpi-card purple">
-      <div class="kpi-label">WEii-score</div>
-      <div class="kpi-value" id="kpiWeii">—</div>
-      <div class="kpi-unit">kWh/m² · <span id="kpiWeiiClass">—</span></div>
-    </div>
-    <div class="kpi-card" style="border-top:2px solid var(--text3);">
-      <div class="kpi-label">Tijdinterval</div>
-      <div class="kpi-value" id="kpiInterval" style="font-size:16px;">—</div>
-      <div class="kpi-unit" id="kpiIntervalSub">detectie op basis van data</div>
-    </div>
-  </div>
-
-  <div id="nedInfoBlock" class="nb hidden"></div>
-
-  <!-- Grafieken -->
-  <h2><span class="h2-num">01</span>Tijdreeksen</h2>
-  <div class="tabs">
-    <button class="tb on" onclick="switchTab(this,'tabElektra')">Elektra</button>
-    <button class="tb" onclick="switchTab(this,'tabCO2TS')">CO₂ tijdreeks</button>
-    <button class="tb" id="tabMixBtn" onclick="switchTab(this,'tabMix')">Energiemix</button>
-  </div>
-  <div class="tab-panel on" id="tabElektra">
-    <div class="chart-card"><div class="chart-title">Elektraverbruik per tijdstip (kWh)</div><div class="chart-wrap"><canvas id="chartTimeseries"></canvas></div></div>
-  </div>
-  <div class="tab-panel" id="tabCO2TS">
-    <div class="chart-card"><div class="chart-title">CO₂-uitstoot elektra per tijdstip (kg)</div><div class="chart-wrap"><canvas id="chartCO2TS"></canvas></div></div>
-  </div>
-  <div class="tab-panel" id="tabMix">
-    <div class="chart-card"><div class="chart-title">Energiemix (kWh / m³ per tijdstip)</div><div class="chart-wrap"><canvas id="chartMix"></canvas></div></div>
-  </div>
-
-  <h2><span class="h2-num">02</span>Dagpatroon &amp; heatmap</h2>
-  <div class="charts-grid">
-    <div class="chart-card"><div class="chart-title">Gemiddeld elektraverbruik per uur van de dag</div><div class="chart-wrap"><canvas id="chartHourly"></canvas></div></div>
-    <div class="chart-card" id="signalChartCard" style="display:none"><div class="chart-title">Verbruik vs signaal per uur</div><div class="chart-wrap"><canvas id="chartSignal"></canvas></div></div>
-    <div class="chart-card wide" id="nedChartCard" style="display:none"><div class="chart-title">Gemiddelde NED-emissiefactor per uur (gCO₂/kWh)</div><div class="chart-wrap"><canvas id="chartNedEF"></canvas></div></div>
-  </div>
-  <div class="chart-card" style="margin-bottom:8px;">
-    <div class="chart-title">Dag × Uur gemiddelde elektra (kWh)</div>
-    <div class="heatmap-scroll" id="heatmapWrap"></div>
-  </div>
-
-  <!-- Score-uitleg -->
-  <h2><span class="h2-num">03</span>WEii Energiekompas</h2>
-
-  <div class="accordion">
-    <div class="acc-head open" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num purple">Kompas</span>Energiekompas &mdash; WEii-klasse vs. Energielabel</div><span class="acc-icon" style="transform:rotate(180deg)">&#9660;</span></div>
-    <div class="acc-body open"><div class="acc-inner">
-      <p><strong>Het WEii Energiekompas</strong> toont de relatie tussen het energielabel (theoretisch, gebouwgebonden, NTA 8800) en de WEii-klasse (werkelijk, gebruiksgebonden). Een groot verschil duidt op een <strong>prestatiegat</strong>: het gebouw presteert beter of slechter dan het label suggereert.</p>
-      <div id="energiekompasWrap" style="margin:12px 0;overflow-x:auto;"></div>
-      <div id="energiekompasNotice" class="nb" style="font-size:12px;">Stel een energielabel in (instellingen hierboven) en analyseer een dataset om het Energiekompas te tonen.</div>
-      <div id="energiekompasLegend" class="hidden" style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text2);">
-        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#dcfce7;border:1px solid #86efac;display:inline-block"></span>Consistent</span>
-        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#fef9c3;border:1px solid #fde047;display:inline-block"></span>Licht prestatiegat</span>
-        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#fee2e2;border:1px solid #fca5a5;display:inline-block"></span>Groot prestatiegat</span>
-        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#eff6ff;border:1px solid #bfdbfe;display:inline-block"></span>Beter dan label verwacht</span>
+      <div class="ned-row">
+        <span style="font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap;">NED API</span>
+        <div class="ned-status">
+          <div class="ned-dot" id="nedDot"></div>
+          <span id="nedStatusText" style="font-size:11.5px;color:var(--text3);">Niet verbonden</span>
+        </div>
+        <input type="password" id="nedApiKey" class="txt-input" placeholder="API-sleutel" style="width:200px;">
+        <button class="btn btn-secondary" style="padding:5px 12px;font-size:11px;" id="btnNedConnect">Verbinden</button>
+        <button class="btn btn-outline" style="padding:5px 12px;font-size:11px;" id="btnNedDefault">Standaard EF</button>
       </div>
-    </div></div>
-  </div>
 
-  <h2><span class="h2-num">04</span>Score-toelichting</h2>
+      <div style="border-top:1px solid var(--border);">
+        <div style="padding:8px 16px 4px;font-size:10.5px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase;">
+          Standaard emissiefactoren (fallback)
+        </div>
+        <table class="ef-table">
+          <tr><td>Elektriciteit</td><td><span class="fixed-val">389 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— NL (fallback)</span></td></tr>
+          <tr><td>Aardgas</td><td><span class="fixed-val">1,884 kg CO₂/m³</span> <span style="font-size:10.5px;color:var(--text3);">— (fallback)</span></td></tr>
+          <tr><td>Warmte</td><td><span class="fixed-val">220 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— (fallback)</span></td></tr>
+          <tr><td>Opwek (PV)</td><td><span class="fixed-val">0 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— informatief</span></td></tr>
+        </table>
+      </div>
+    </div>
 
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">A</span>Vlakheid — Peak-to-Average Ratio</div><span class="acc-icon">▼</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p><strong>Formule:</strong> PAR = max(kWh) / gemiddelde(kWh)<br>Score = clamp(100 × (4,0 − PAR) / (4,0 − 1,2), 0, 100)</p>
-      <p><strong>Interpretatie:</strong> Hoge score = vlak profiel. Gunstig voor netbelasting en kosten.</p>
-      <div class="val-block" id="flatnessDetails"></div>
-    </div></div>
-  </div>
+    <div id="validationWarnings" class="warnings-box hidden"></div>
 
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">B</span>Time of Use</div><span class="acc-icon">▼</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p><strong>Signaalprioriteit:</strong> (1) Grid-signaal, (2) NED-emissiefactor, (3) Prijskolom<br><strong>Formule:</strong> TOU = Σ(kWh_i × signal_i) / Σ(kWh_i) · Score = round(100 × TOU)</p>
-      <div class="val-block" id="touDetails"></div>
-    </div></div>
-  </div>
+    <div class="analyse-btn-wrap">
+      <button class="btn btn-primary" id="btnRun">Analyseer dataset</button>
+    </div>
 
-  <div class="accordion">
-    <div class="acc-head" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">C</span>Flexibiliteit</div><span class="acc-icon">▼</span></div>
-    <div class="acc-body"><div class="acc-inner">
-      <p><strong>Formule:</strong> score_flex = clamp(100 × peak_share × (1 − constraint + 0,2), 0, 100)</p>
-      <div class="val-block" id="flexDetails"></div>
-    </div></div>
-  </div>
+    <div class="preview-wrap">
+      <div class="preview-head"><span>Preview — eerste 20 rijen</span></div>
+      <div class="table-scroll"><table id="previewTable" class="data-table"></table></div>
+    </div>
+  </section>
 
-  <!-- WEii INDICATOREN -->
-  <h2><span class="h2-num">05</span>WEii-indicatoren <span style="font-size:11px;font-weight:300;color:var(--text3);">conform WEii-protocol v3.1 · TVVL &amp; DGBC 2026</span></h2>
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="hidden" style="margin-top:28px;">
 
-  <style>
-  .wi-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
-  .wi-tbl thead th{background:var(--cream);padding:8px 14px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);border-bottom:1.5px solid var(--border2);}
-  .wi-tbl tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
-  .wi-tbl tbody tr:last-child td{border-bottom:none;}
-  .wi-tbl tbody tr:hover td{background:var(--cream);}
-  .wi-name{font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px;white-space:nowrap;}
-  .wi-sub{font-size:11px;color:var(--text3);font-weight:300;margin-top:1px;}
-  .wi-val{font-weight:600;font-size:13px;color:var(--text);}
-  .wi-na{font-size:11.5px;color:var(--text3);font-weight:300;font-style:italic;}
-  .tti{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--blue-s);border:1px solid var(--blue-b);color:var(--blue);font-size:9px;font-weight:700;cursor:help;flex-shrink:0;}
-  .tti .tt{display:none;position:absolute;left:20px;top:50%;transform:translateY(-50%);z-index:400;background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:11px 13px;width:290px;box-shadow:0 4px 16px rgba(0,0,0,.1);pointer-events:none;}
-  .tti:hover .tt,.tti:focus .tt{display:block;}
-  .tt-t{font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:4px;}
-  .tt-d{font-size:11px;color:var(--text2);font-weight:300;line-height:1.55;margin-bottom:5px;}
-  .tt-f{font-size:10px;font-family:monospace;background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:3px 6px;color:var(--blue);margin-bottom:4px;display:block;}
-  .tt-s{font-size:10px;color:var(--text3);}
-  .besp-row{display:flex;align-items:center;gap:7px;margin-top:6px;flex-wrap:wrap;}
-  .besp-row input{background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;width:85px;font-family:var(--sans);}
-  </style>
+    <div class="section-eyebrow">Resultaten</div>
+    <h1>Energieprofiel <em>analyse</em></h1>
+    <p class="lead" id="dashboardSubtitle"></p>
 
-  <div style="border:1px solid var(--border);border-radius:var(--r);background:var(--white);overflow:hidden;">
-  <table class="wi-tbl">
-    <thead><tr>
-      <th style="width:36%">Indicator</th>
-      <th style="width:22%">Waarde</th>
-      <th>Klasse / toelichting</th>
-    </tr></thead>
-    <tbody>
-      <tr>
-        <td>
-          <div class="wi-name">WEii-score
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEii &mdash; Werkelijke Energie Intensiteit Indicator</div>
-              <div class="tt-d">Werkelijk gemeten energiegebruik per m&sup2; per jaar. Gebaseerd op netafname minus teruglevering, gecorrigeerd voor weersinvloeden.</div>
-              <code class="tt-f">WEii = (E_in &minus; E_uit + E_cor;verw) / Ag</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;6.1 &nbsp;&middot;&nbsp; kWh/m&sup2;&middot;jaar</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">Werkelijke energie-intensiteit</div>
-        </td>
-        <td><span class="wi-val" id="weiiValScore">&mdash;</span> <span style="font-size:11px;color:var(--text3)">kWh/m&sup2;</span></td>
-        <td id="weiiDetails"><span class="wi-na">Stel gebouwtype + Ag in</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="wi-name">WEii<sub>fin</sub>
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEiifinaal &mdash; Finaal energiegebruik</div>
-              <div class="tt-d">Netto energiegebruik inclusief het direct eigen gebruik van lokale PV-opwek. Geeft inzicht in de totale energievraag inclusief wat op het dak wordt opgewekt en direct verbruikt.</div>
-              <code class="tt-f">WEiifinaal = (E_in + E_opwek &minus; E_terug &minus; E_uitgesl) / Ag</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;8.1 &nbsp;&middot;&nbsp; Vereist: opwekkolom</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">Inclusief eigen PV-gebruik</div>
-        </td>
-        <td><span class="wi-val" id="weiiValFinaal">&mdash;</span> <span style="font-size:11px;color:var(--text3)" id="weiiFinaalUnit">kWh/m&sup2;</span></td>
-        <td id="weiiFinaalDetails"><span class="wi-na">Vereist opwekkolom + Ag</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="wi-name">WEii<sub>gas</sub>
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEiigas &mdash; Fossiel brandstofgebruik</div>
-              <div class="tt-d">Energiegebruik door fossiele brandstoffen (aardgas, olie, propaan) per m&sup2; per jaar. Stuurt op reductie van directe (scope 1) CO&sub2;-emissies.</div>
-              <code class="tt-f">WEiigas = (&Sigma; E_fossiel &minus; E_uitgesl;fossiel + E_cor;verw) / Ag</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;8.2 &nbsp;&middot;&nbsp; Vereist: gaskolom + Ag</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">Fossiele brandstoffen</div>
-        </td>
-        <td><span class="wi-val" id="weiiValGas">&mdash;</span> <span style="font-size:11px;color:var(--text3)">kWh/m&sup2;</span></td>
-        <td id="weiiGasDetails"><span class="wi-na">Vereist gaskolom + Ag</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="wi-name">WEii<sub>CO&sub2;</sub>
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEiiCO&sub2; &mdash; Werkelijke CO&sub2;-intensiteit</div>
-              <div class="tt-d">CO&sub2;-emissie per m&sup2; per jaar op basis van vaste landelijke emissiefactoren per energiedrager. Geen weerscorrectie. Factoren worden jaarlijks bijgesteld op WEii.nl.</div>
-              <code class="tt-f">WEiiCO&sub2; = (C_in &minus; C_uit &minus; C_uitgesl) / Ag</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;8.3 &nbsp;&middot;&nbsp; kg CO&sub2;/m&sup2;&middot;jaar</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">CO&sub2;-emissie per m&sup2;</div>
-        </td>
-        <td><span class="wi-val" id="weiiValCO2">&mdash;</span> <span style="font-size:11px;color:var(--text3)">kg/m&sup2;</span></td>
-        <td id="weiiCO2Details"><span class="wi-na">Vereist Ag</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="wi-name">WEii<sub>besp</sub>
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEiibesparing &mdash; Percentuele besparing t.o.v. referentiejaar</div>
-              <div class="tt-d">Procentuele daling van het werkelijk energiegebruik t.o.v. een referentiejaar. Geschikt voor portfoliomonitoring en wettelijke besparingsdoelstellingen.</div>
-              <code class="tt-f">WEiibesparing = (1 &minus; WEii_jaar / WEii_ref) &times; 100%</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;8.4 &nbsp;&middot;&nbsp; Voer referentie in hieronder</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">T.o.v. referentiejaar</div>
-          <div class="besp-row">
-            <label style="font-size:11px;color:var(--text3)">Referentie (kWh/m&sup2;)</label>
-            <input type="number" id="weiiRef" placeholder="bijv. 145" min="0">
-            <button class="btn btn-secondary" style="padding:4px 10px;font-size:11px;" onclick="calcBesparing()">Berekenen</button>
-          </div>
-        </td>
-        <td><span class="wi-val" id="weiiValBesp">&mdash;</span></td>
-        <td id="weiiBesparingDetails"><span class="wi-na">Voer referentie-WEii in</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="wi-name">WEii<sub>dek</sub>
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEiidekkingsgraad &mdash; Eigen PV-gebruik t.o.v. finaal</div>
-              <div class="tt-d">Aandeel van de direct in het gebouw benutte lokale PV-opwek in het finale energiegebruik. Hoge waarde = veel eigen gebruik, weinig teruglevering aan het net.</div>
-              <code class="tt-f">WEii_dek = (E_opwek &minus; E_terug) / (E_opwek + E_in &minus; E_terug) &times; 100%</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;8.5 &nbsp;&middot;&nbsp; Vereist: opwekkolom</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">Eigen PV-gebruik / finaal gebruik</div>
-        </td>
-        <td><span class="wi-val" id="weiiValDek">&mdash;</span></td>
-        <td id="weiiDekkingDetails"><span class="wi-na">Vereist opwekkolom</span></td>
-      </tr>
-      <tr>
-        <td>
-          <div class="wi-name">WEii<sub>ben</sub>
-            <span class="tti" tabindex="0">i<span class="tt">
-              <div class="tt-t">WEiibenuttingsfactor &mdash; Eigen gebruik t.o.v. totale opwek</div>
-              <div class="tt-d">Aandeel van het direct benutte deel van de totale lokale opwek. Lage waarde = groot PV-systeem met veel teruglevering aan het net.</div>
-              <code class="tt-f">WEii_ben = (E_opwek &minus; E_terug) / E_opwek &times; 100%</code>
-              <div class="tt-s">WEii-protocol v3.1, &sect;8.6 &nbsp;&middot;&nbsp; Vereist: opwekkolom</div>
-            </span></span>
-          </div>
-          <div class="wi-sub">Eigen PV-gebruik / totale opwek</div>
-        </td>
-        <td><span class="wi-val" id="weiiValBen">&mdash;</span></td>
-        <td id="weiiBenuttingDetails"><span class="wi-na">Vereist opwekkolom</span></td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+    <div class="kpi-grid">
+      <div class="kpi-card accent">
+        <div class="kpi-label">Elektra totaal</div>
+        <div class="kpi-value" id="kpiElektra">—</div>
+        <div class="kpi-unit">kWh</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Warmte totaal</div>
+        <div class="kpi-value" id="kpiWarmte">—</div>
+        <div class="kpi-unit">kWh</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Gas totaal</div>
+        <div class="kpi-value" id="kpiGas">—</div>
+        <div class="kpi-unit">m³</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Opwek totaal</div>
+        <div class="kpi-value" id="kpiOpwek">—</div>
+        <div class="kpi-unit">kWh</div>
+      </div>
 
-  <!-- Export knoppen -->
-  <div class="export-row" style="display:flex;gap:8px;flex-wrap:wrap;padding-top:20px;margin-top:20px;border-top:1px solid var(--border);">
-    <button class="btn btn-secondary" onclick="downloadJSON()">Download resultaten (JSON)</button>
-    <button class="btn btn-secondary" onclick="downloadCSV()">Download samenvatting (CSV)</button>
-    <button class="btn btn-secondary" onclick="window.print()">Afdrukken / PDF</button>
-    <button class="btn" style="margin-left:auto;" onclick="resetDashboard()">&#8635; Nieuw bestand</button>
-  </div>
+      <div class="kpi-card accent">
+        <div class="kpi-label">CO₂ uitstoot (scope: verbruik)</div>
+        <div class="kpi-value" id="kpiCO2">—</div>
+        <div class="kpi-unit">kg CO₂</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">CO₂ intensiteit (elektra)</div>
+        <div class="kpi-value" id="kpiCO2perKwh">—</div>
+        <div class="kpi-unit">g/kWh</div>
+      </div>
 
-</div><!-- /dashboard -->
+      <div class="kpi-card blue">
+        <div class="kpi-label">Score Vlakheid</div>
+        <div class="kpi-value" id="kpiFlatness">—</div>
+        <div class="kpi-unit">/ 100 · PAR <span id="kpiPAR">—</span></div>
+        <div class="kpi-bar"><div class="kpi-fill blue" id="flatnessBar" style="width:0%"></div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Score Time of Use</div>
+        <div class="kpi-value" id="kpiTOU">—</div>
+        <div class="kpi-unit">/ 100</div>
+        <div class="kpi-bar"><div class="kpi-fill" id="touBar" style="width:0%"></div></div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Score Flexibiliteit</div>
+        <div class="kpi-value" id="kpiFlex">—</div>
+        <div class="kpi-unit">/ 100</div>
+        <div class="kpi-bar"><div class="kpi-fill green" id="flexBar" style="width:0%"></div></div>
+      </div>
+
+      <div class="kpi-card" style="border-top:2px solid var(--text3);">
+        <div class="kpi-label">Tijdinterval</div>
+        <div class="kpi-value" id="kpiInterval" style="font-size:16px;">—</div>
+        <div class="kpi-unit" id="kpiIntervalSub">detectie op basis van data</div>
+      </div>
+    </div>
+
+    <h2><span class="h2-num">01</span>Tijdreeksen</h2>
+    <div class="tabs">
+      <button class="tb on" data-panel="tabElektra">Elektra</button>
+      <button class="tb" data-panel="tabCO2TS">CO₂ (elektra)</button>
+    </div>
+
+    <div class="tab-panel on" id="tabElektra">
+      <div class="chart-card">
+        <div class="chart-title">Elektraverbruik per tijdstip (kWh)</div>
+        <div class="chart-wrap"><canvas id="chartTimeseries"></canvas></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tabCO2TS">
+      <div class="chart-card">
+        <div class="chart-title">CO₂-uitstoot elektra per tijdstip (kg)</div>
+        <div class="chart-wrap"><canvas id="chartCO2TS"></canvas></div>
+      </div>
+    </div>
+
+    <h2><span class="h2-num">02</span>Dagpatroon &amp; heatmap</h2>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Gemiddeld elektraverbruik per uur van de dag</div>
+        <div class="chart-wrap"><canvas id="chartHourly"></canvas></div>
+      </div>
+      <div class="chart-card" id="signalChartCard" style="display:none">
+        <div class="chart-title">Verbruik vs signaal per uur</div>
+        <div class="chart-wrap"><canvas id="chartSignal"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:8px;">
+      <div class="chart-title">Dag × Uur gemiddelde elektra (kWh)</div>
+      <div class="heatmap-scroll" id="heatmapWrap"></div>
+    </div>
+
+    <h2><span class="h2-num">03</span>Score-toelichting</h2>
+
+    <div class="accordion">
+      <div class="acc-head" id="accA">
+        <div class="acc-title"><span class="acc-num blue">A</span>Vlakheid — Peak-to-Average Ratio</div>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p><strong>Formule:</strong> PAR = max(kWh) / gemiddelde(kWh)<br>
+             Score = clamp(100 × (4,0 − PAR) / (4,0 − 1,2), 0, 100)</p>
+          <div class="val-block" id="flatnessDetails"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-head" id="accB">
+        <div class="acc-title"><span class="acc-num">B</span>Time of Use</div>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p><strong>Signaalprioriteit:</strong> (1) Grid-signaal, (2) Prijs (geïnverteerd).<br>
+            <strong>Formule:</strong> TOU = Σ(kWh_i × signal_i) / Σ(kWh_i) · Score = round(100 × TOU)</p>
+          <div class="val-block" id="touDetails"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-head" id="accC">
+        <div class="acc-title"><span class="acc-num green">C</span>Flexibiliteit</div>
+        <span class="acc-icon">▼</span>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p><strong>Heuristiek:</strong> flexibiliteit als “load shifting potentieel”: aandeel verbruik in piekuren,
+             gecorrigeerd voor vlakheid.</p>
+          <div class="val-block" id="flexDetails"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="export-row">
+      <button class="btn btn-secondary" id="btnJson">Download resultaten (JSON)</button>
+      <button class="btn btn-secondary" id="btnCsv">Download samenvatting (CSV)</button>
+      <button class="btn btn-secondary" onclick="window.print()">Afdrukken / PDF</button>
+      <button class="btn" style="margin-left:auto;" id="btnReset">&#8635; Nieuw bestand</button>
+    </div>
+
+  </section>
+
+</div>
 
 <div class="loading-overlay hidden" id="loadingOverlay">
   <div class="loading-inner">
     <div class="loading-spinner"></div>
-    <p id="loadingMsg" style="font-size:13px;color:var(--text2);margin-top:4px;">Analyseren...</p>
+    <p id="loadingMsg">Analyseren...</p>
   </div>
 </div>
 
 <script>
-/**
- * ═══════════════════════════════════════════════════════════════
- * ENERGIEPROFIEL DASHBOARD — app.js
- * Client-side alleen: SheetJS + Chart.js
- * ═══════════════════════════════════════════════════════════════
- */
-
 'use strict';
 
-// ─── Globale state ────────────────────────────────────────────
-let rawData = [];      // Verwerkte rijen na mapping/validatie
-let analysisResult = null;  // Alle berekende waarden
-let columnHeaders = [];     // Kolomnamen uit Excel
-let chartInstances = {};    // Chart.js instanties (voor destroy on re-render)
+/* ============================================================
+   Helpers (veilig) + state
+============================================================ */
+const $ = (id) => document.getElementById(id);
+const on = (id, evt, fn) => { const el = $(id); if (el) el.addEventListener(evt, fn); };
 
-// ─── Chart.js globale defaults ────────────────────────────────
-Chart.defaults.color = '#9a9a96';
+let rawData = [];
+let analysisResult = null;
+let columnHeaders = [];
+let chartInstances = {};
+
+let nedConnected = false; // UI-only placeholder
+
+/* ============================================================
+   Chart defaults
+============================================================ */
+Chart.defaults.color = '#5a5650';
 Chart.defaults.borderColor = '#d8d7d2';
-Chart.defaults.font.family = "'IBM Plex Mono', 'Courier New', monospace";
+Chart.defaults.font.family = "'Poppins', system-ui, sans-serif";
 Chart.defaults.font.size = 10;
 
-// ══════════════════════════════════════════════════════════════
-// 1. FILE UPLOAD & DRAG-DROP
-// ══════════════════════════════════════════════════════════════
+/* ============================================================
+   Init (bind events)
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  const dropZone = $('dropZone');
+  const fileInput = $('fileInput');
 
-const dropZone = document.getElementById('dropZone');
-const fileInput = document.getElementById('fileInput');
+  on('btnChooseFile', 'click', () => fileInput?.click());
 
-dropZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  dropZone.classList.add('drag-over');
-});
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if (file) handleFile(file);
-});
-fileInput.addEventListener('change', () => {
-  if (fileInput.files[0]) handleFile(fileInput.files[0]);
+  dropZone?.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+  dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+  dropZone?.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+
+  fileInput?.addEventListener('change', () => {
+    if (fileInput.files[0]) handleFile(fileInput.files[0]);
+  });
+
+  on('btnRun', 'click', runAnalysis);
+  on('btnReset', 'click', resetDashboard);
+  on('btnJson', 'click', downloadJSON);
+  on('btnCsv', 'click', downloadCSV);
+
+  // Tabs
+  document.querySelectorAll('.tb').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn, btn.dataset.panel));
+  });
+
+  // Accordions
+  ['accA','accB','accC'].forEach(id => {
+    const head = $(id);
+    if (head) head.addEventListener('click', () => toggleAcc(head));
+  });
+
+  // NED UI (non-blocking placeholder)
+  on('btnNedConnect', 'click', testNedApi);
+  on('btnNedDefault', 'click', useDefaultEF);
 });
 
-/**
- * handleFile — Leest het Excel-bestand via SheetJS en toont de mapping UI.
- * @param {File} file
- */
+/* ============================================================
+   1) Upload + parse Excel
+============================================================ */
 function handleFile(file) {
-  showLoading(true);
+  showLoading(true, 'Excel inlezen...');
   const reader = new FileReader();
   reader.onload = (e) => {
-    try {
-      parseExcel(e.target.result);
-    } catch (err) {
-      alert('Fout bij inlezen Excel: ' + err.message);
-      console.error(err);
-    } finally {
-      showLoading(false);
-    }
+    try { parseExcel(e.target.result); }
+    catch (err) { alert('Fout bij inlezen Excel: ' + err.message); console.error(err); }
+    finally { showLoading(false); }
   };
   reader.readAsArrayBuffer(file);
 }
 
-// ══════════════════════════════════════════════════════════════
-// 2. EXCEL PARSING
-// ══════════════════════════════════════════════════════════════
-
-/**
- * parseExcel — Verwerkt de Excel ArrayBuffer via SheetJS.
- * Detecteert kolomnamen, toont preview en vult dropdowns.
- * @param {ArrayBuffer} buffer
- */
 function parseExcel(buffer) {
   const workbook = XLSX.read(buffer, { type: 'array', cellDates: true });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-  // Zet sheet om naar array-of-objects (header row als sleutels)
   const jsonData = XLSX.utils.sheet_to_json(sheet, {
-    raw: false,          // Strings zodat we zelf parsen
+    raw: false,
     defval: '',
     dateNF: 'yyyy-mm-dd hh:mm:ss',
   });
-
   if (!jsonData.length) throw new Error('Excel-sheet is leeg of heeft geen data.');
 
-  columnHeaders = Object.keys(jsonData[0]);
   rawData = jsonData;
+  columnHeaders = Object.keys(jsonData[0]);
 
-  // Vul dropdown opties
   populateMappingDropdowns(columnHeaders);
-
-  // Auto-detecteer kolommen op naam
   autoDetectColumns(columnHeaders);
-
-  // Toon preview tabel
   renderPreviewTable(jsonData.slice(0, 20), columnHeaders);
 
-  // Toon mapping section
-  document.getElementById('uploadSection').classList.add('hidden');
-  document.getElementById('mappingSection').classList.remove('hidden');
+  $('uploadSection')?.classList.add('hidden');
+  $('mappingSection')?.classList.remove('hidden');
 }
 
-/**
- * populateMappingDropdowns — Vult alle select-elementen met kolomnamen.
- */
 function populateMappingDropdowns(headers) {
-  const requiredSelects = ['colTimestamp', 'colConsumption'];
-  const optionalSelects = ['colEmission', 'colPrice', 'colSignal', 'colImport', 'colExport'];
+  const required = ['colTimestamp','colElektra'];
+  const optional = ['colWarmte','colGas','colOpwek','colPrice','colSignal'];
 
-  requiredSelects.forEach(id => {
-    const el = document.getElementById(id);
-    el.innerHTML = '<option value="">— Kies kolom —</option>' +
-      headers.map(h => `<option value="${h}">${h}</option>`).join('');
+  required.forEach(id => {
+    const el = $(id); if (!el) return;
+    el.innerHTML = '<option value="">— Kies kolom —</option>' + headers.map(h => `<option value="${h}">${h}</option>`).join('');
   });
 
-  optionalSelects.forEach(id => {
-    const el = document.getElementById(id);
-    el.innerHTML = '<option value="">(geen)</option>' +
-      headers.map(h => `<option value="${h}">${h}</option>`).join('');
+  optional.forEach(id => {
+    const el = $(id); if (!el) return;
+    el.innerHTML = '<option value="">(geen)</option>' + headers.map(h => `<option value="${h}">${h}</option>`).join('');
   });
 }
 
-/**
- * autoDetectColumns — Probeert kolommen te raden op basis van naampatronen.
- */
 function autoDetectColumns(headers) {
   const patterns = {
-    colTimestamp:   /time|timestamp|datum|date|tijd|datetime|dt/i,
-    colConsumption: /kwh|verbruik|consump|usage|energy|energie|vermogen/i,
-    colEmission:    /emiss|co2|ef|factor/i,
-    colPrice:       /price|prijs|tarief|cost|eur/i,
-    colSignal:      /signal|signaal|grid|flex/i,
-    colImport:      /import/i,
-    colExport:      /export/i,
+    colTimestamp: /time|timestamp|datum|date|tijd|datetime|dt/i,
+    colElektra:   /elek|stroom|electric|power|kwh|verbruik|consump|usage|energy/i,
+    colWarmte:    /warmte|heat|therm/i,
+    colGas:       /gas|m3|m³|aardgas/i,
+    colOpwek:     /opwek|pv|zonn|terug|export/i,
+    colPrice:     /price|prijs|tarief|cost|eur/i,
+    colSignal:    /signal|signaal|grid|flex/i,
   };
-
-  Object.entries(patterns).forEach(([id, regex]) => {
-    const match = headers.find(h => regex.test(h));
-    if (match) document.getElementById(id).value = match;
+  Object.entries(patterns).forEach(([id, rx]) => {
+    const match = headers.find(h => rx.test(h));
+    const el = $(id);
+    if (match && el) el.value = match;
   });
-
-  // Toon exportMode alleen als import of export gevonden
-  checkExportModeVisibility();
 }
 
-document.getElementById('colImport').addEventListener('change', checkExportModeVisibility);
-document.getElementById('colExport').addEventListener('change', checkExportModeVisibility);
-
-function checkExportModeVisibility() {
-  const hasImport = document.getElementById('colImport').value;
-  const hasExport = document.getElementById('colExport').value;
-  document.getElementById('exportModeGroup').style.display =
-    (hasImport || hasExport) ? 'flex' : 'none';
-  document.getElementById('defaultEfGroup').style.display =
-    document.getElementById('colEmission').value ? 'none' : 'flex';
-}
-
-document.getElementById('colEmission').addEventListener('change', checkExportModeVisibility);
-
-// Slider labels
-document.getElementById('peakPct').addEventListener('input', function() {
-  document.getElementById('peakPctLabel').textContent = this.value + '%';
-});
-document.getElementById('offpeakPct').addEventListener('input', function() {
-  document.getElementById('offpeakPctLabel').textContent = this.value + '%';
-});
-
-// ══════════════════════════════════════════════════════════════
-// 3. PREVIEW TABEL
-// ══════════════════════════════════════════════════════════════
-
-/**
- * renderPreviewTable — Toont de eerste 20 rijen als HTML-tabel.
- */
 function renderPreviewTable(rows, headers) {
-  const table = document.getElementById('previewTable');
-  const thead = `<thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
-  const tbody = `<tbody>${rows.map(r =>
-    `<tr>${headers.map(h => `<td>${r[h] ?? ''}</td>`).join('')}</tr>`
-  ).join('')}</tbody>`;
+  const table = $('previewTable');
+  if (!table) return;
+  const thead = `<thead><tr>${headers.map(h => `<th>${escapeHtml(h)}</th>`).join('')}</tr></thead>`;
+  const tbody = `<tbody>${rows.map(r => `<tr>${headers.map(h => `<td>${escapeHtml(r[h] ?? '')}</td>`).join('')}</tr>`).join('')}</tbody>`;
   table.innerHTML = thead + tbody;
 }
 
-// ══════════════════════════════════════════════════════════════
-// 4. ANALYSE HOOFDFUNCTIE
-// ══════════════════════════════════════════════════════════════
-
-/**
- * runAnalysis — Hoofdentrypoint: leest mapping, valideert, berekent, rendert.
- */
+/* ============================================================
+   2) Analyse pipeline
+============================================================ */
 function runAnalysis() {
-  // Haal mapping op
   const mapping = {
-    timestamp:   document.getElementById('colTimestamp').value,
-    consumption: document.getElementById('colConsumption').value,
-    emission:    document.getElementById('colEmission').value,
-    price:       document.getElementById('colPrice').value,
-    signal:      document.getElementById('colSignal').value,
-    importKwh:   document.getElementById('colImport').value,
-    exportKwh:   document.getElementById('colExport').value,
+    timestamp: $('colTimestamp')?.value,
+    elektra:   $('colElektra')?.value,
+    warmte:    $('colWarmte')?.value,
+    gas:       $('colGas')?.value,
+    opwek:     $('colOpwek')?.value,
+    price:     $('colPrice')?.value,
+    signal:    $('colSignal')?.value,
   };
-  const defaultEF   = parseFloat(document.getElementById('defaultEF').value) || 300;
-  const exportMode  = document.getElementById('exportMode').value;
-  const peakPct     = parseFloat(document.getElementById('peakPct').value) / 100;
-  const offpeakPct  = parseFloat(document.getElementById('offpeakPct').value) / 100;
 
-  if (!mapping.timestamp || !mapping.consumption) {
-    alert('Selecteer minimaal een tijdstempel- en verbruikskolom.');
+  if (!mapping.timestamp || !mapping.elektra) {
+    alert('Selecteer minimaal Tijdstempel en Elektraverbruik (kWh).');
     return;
   }
 
-  showLoading(true);
-
-  // Kleine timeout zodat loading-UI zichtbaar is
+  showLoading(true, 'Analyseren...');
   setTimeout(() => {
     try {
-      // Stap 1: Bouw getypeerde rijen
       const typedRows = buildTypedRows(rawData, mapping);
-
-      // Stap 2: Valideer & herstel
       const { cleanRows, warnings } = validateAndClean(typedRows);
-
-      // Stap 3: Detecteer interval
       const intervalMin = detectInterval(cleanRows);
 
-      // Stap 4: Bereken CO2
-      const co2Result = computeCO2(cleanRows, mapping, defaultEF, exportMode);
+      const co2Result = computeCO2Extended(cleanRows);
+      const scores = computeScores(cleanRows, 0.10, 0.10); // X=10%, Y=10%
 
-      // Stap 5: Bereken scores
-      const scores = computeScores(cleanRows, peakPct, offpeakPct);
-
-      // Stap 6: Sla op en render
-      analysisResult = { mapping, cleanRows, intervalMin, co2Result, scores, warnings, defaultEF, exportMode };
+      analysisResult = { mapping, cleanRows, intervalMin, co2Result, scores, warnings };
 
       renderWarnings(warnings);
-      renderKpis(co2Result, scores, cleanRows);
-      renderCharts(cleanRows, mapping, scores);
-      renderExplainDetails(scores, co2Result);
+      renderKpis(co2Result, scores);
+      renderCharts(cleanRows, co2Result, scores);
+      renderExplainDetails(scores);
+
       updateHeaderBadges(cleanRows.length, intervalMin);
+      renderIntervalKpi(intervalMin, cleanRows);
 
-      document.getElementById('dashboard').classList.remove('hidden');
-      document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+      $('dashboardSubtitle').textContent =
+        `${fmtDate(cleanRows[0]?.ts)} – ${fmtDate(cleanRows[cleanRows.length-1]?.ts)} · basis: elektra-profiel`;
 
+      $('dashboard')?.classList.remove('hidden');
+      $('dashboard')?.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
       alert('Analysefout: ' + err.message);
       console.error(err);
     } finally {
       showLoading(false);
     }
-  }, 60);
+  }, 50);
 }
 
-// ══════════════════════════════════════════════════════════════
-// 5. DATA VERWERKING & VALIDATIE
-// ══════════════════════════════════════════════════════════════
-
-/**
- * buildTypedRows — Converteert ruwe Excel-strings naar getypeerde objecten.
- * @returns {Array<{ts: Date, kwh: number, ef?: number, price?: number, signal?: number, importKwh?: number, exportKwh?: number}>}
- */
 function buildTypedRows(rows, mapping) {
   return rows.map((r, i) => {
-    const tsRaw  = r[mapping.timestamp];
-    const kwhRaw = r[mapping.consumption];
-
-    // Datumparse: SheetJS geeft soms al een Date, soms string
-    let ts;
-    if (tsRaw instanceof Date) {
-      ts = tsRaw;
-    } else {
-      ts = new Date(tsRaw);
-    }
+    const tsRaw = r[mapping.timestamp];
+    let ts = (tsRaw instanceof Date) ? tsRaw : new Date(tsRaw);
     if (isNaN(ts.getTime())) ts = null;
 
-    const kwh = parseFloatSafe(kwhRaw);
+    const elektra = parseFloatSafe(r[mapping.elektra]);
+    const warmte  = mapping.warmte ? parseFloatSafe(r[mapping.warmte]) : 0;
+    const gas     = mapping.gas ? parseFloatSafe(r[mapping.gas]) : 0;
+    const opwek   = mapping.opwek ? parseFloatSafe(r[mapping.opwek]) : 0;
 
-    const row = { _rowIndex: i, ts, kwh };
+    const row = {
+      _rowIndex: i,
+      ts,
+      elektra: isNaN(elektra) ? NaN : elektra,
+      warmte:  isNaN(warmte)  ? 0 : warmte,
+      gas:     isNaN(gas)     ? 0 : gas,
+      opwek:   isNaN(opwek)   ? 0 : opwek,
+      // score-basis:
+      kwh: isNaN(elektra) ? NaN : elektra,
+    };
 
-    if (mapping.emission) row.ef     = parseFloatSafe(r[mapping.emission]);
-    if (mapping.price)    row.price  = parseFloatSafe(r[mapping.price]);
-    if (mapping.signal)   row.signal = parseFloatSafe(r[mapping.signal]);
-    if (mapping.importKwh) row.importKwh = parseFloatSafe(r[mapping.importKwh]);
-    if (mapping.exportKwh) row.exportKwh = parseFloatSafe(r[mapping.exportKwh]);
+    if (mapping.price)  row.price  = parseFloatSafe(r[mapping.price]);
+    if (mapping.signal) row.signal = parseFloatSafe(r[mapping.signal]);
 
     return row;
   });
 }
 
-/**
- * validateAndClean — Sorteert, dedupliceert, markeert gaps, verwijdert ongeldige rijen.
- * @returns {{ cleanRows: Array, warnings: string[] }}
- */
 function validateAndClean(rows) {
   const warnings = [];
 
-  // Verwijder rijen zonder geldige timestamp of kwh
-  const noTs  = rows.filter(r => !r.ts).length;
+  const noTs = rows.filter(r => !r.ts).length;
   const noKwh = rows.filter(r => isNaN(r.kwh)).length;
-  if (noTs)  warnings.push(`⚠ ${noTs} rijen hebben een ongeldige tijdstempel en zijn verwijderd.`);
-  if (noKwh) warnings.push(`⚠ ${noKwh} rijen hebben een niet-numeriek kWh-waarde en zijn verwijderd.`);
+  if (noTs) warnings.push(`⚠ ${noTs} rijen hebben een ongeldige tijdstempel en zijn verwijderd.`);
+  if (noKwh) warnings.push(`⚠ ${noKwh} rijen hebben een niet-numerieke elektra-kWh en zijn verwijderd.`);
 
   let valid = rows.filter(r => r.ts && !isNaN(r.kwh));
 
-  // Sorteer op timestamp
-  valid.sort((a, b) => a.ts - b.ts);
+  valid.sort((a,b) => a.ts - b.ts);
 
-  // Detecteer duplicaten (zelfde timestamp) → sommeer kWh
-  const tsMap = new Map();
+  // Dedup timestamps → sommeer elektra en optionele velden
+  const map = new Map();
   valid.forEach(r => {
     const key = r.ts.getTime();
-    if (tsMap.has(key)) {
-      const existing = tsMap.get(key);
-      existing.kwh += r.kwh;
-      if (r.ef != null && existing.ef != null) existing.ef = (existing.ef + r.ef) / 2;
-    } else {
-      tsMap.set(key, { ...r });
+    if (!map.has(key)) map.set(key, { ...r });
+    else {
+      const ex = map.get(key);
+      ex.elektra += r.elektra;
+      ex.kwh += r.kwh;
+      ex.warmte += r.warmte;
+      ex.gas += r.gas;
+      ex.opwek += r.opwek;
+      // prijs/signaal: neem gemiddelde indien aanwezig
+      if (r.price != null && !isNaN(r.price)) ex.price = (ex.price != null && !isNaN(ex.price)) ? (ex.price + r.price)/2 : r.price;
+      if (r.signal != null && !isNaN(r.signal)) ex.signal = (ex.signal != null && !isNaN(ex.signal)) ? (ex.signal + r.signal)/2 : r.signal;
     }
   });
 
-  const deduped = Array.from(tsMap.values()).sort((a, b) => a.ts - b.ts);
+  const deduped = Array.from(map.values()).sort((a,b) => a.ts - b.ts);
   const dupCount = valid.length - deduped.length;
   if (dupCount > 0) warnings.push(`⚠ ${dupCount} dubbele tijdstempels gedetecteerd en geaggregeerd (kWh gesommeerd).`);
 
-  // Detecteer gaps (intervallen groter dan 2× mediaanstap)
+  // Gaps detectie
   if (deduped.length > 1) {
     const steps = [];
-    for (let i = 1; i < deduped.length; i++) {
-      steps.push(deduped[i].ts - deduped[i - 1].ts);
-    }
-    steps.sort((a, b) => a - b);
-    const medianStep = steps[Math.floor(steps.length / 2)];
+    for (let i=1;i<deduped.length;i++) steps.push(deduped[i].ts - deduped[i-1].ts);
+    steps.sort((a,b)=>a-b);
+    const medianStep = steps[Math.floor(steps.length/2)];
     let gapCount = 0;
-    for (let i = 1; i < deduped.length; i++) {
-      const diff = deduped[i].ts - deduped[i - 1].ts;
-      if (diff > 2 * medianStep) {
-        gapCount++;
-        deduped[i]._gap = true; // markeer gap
-      }
+    for (let i=1;i<deduped.length;i++) {
+      const diff = deduped[i].ts - deduped[i-1].ts;
+      if (diff > 2*medianStep) { gapCount++; deduped[i]._gap = true; }
     }
     if (gapCount > 0) warnings.push(`⚠ ${gapCount} gaten in de tijdreeks gedetecteerd. Berekeningen slaan deze over.`);
   }
@@ -1035,204 +739,150 @@ function validateAndClean(rows) {
   return { cleanRows: deduped, warnings };
 }
 
-/**
- * detectInterval — Bepaalt het mediaaninterval in minuten.
- * @returns {number} intervalMin
- */
 function detectInterval(rows) {
   if (rows.length < 2) return 60;
   const steps = [];
-  for (let i = 1; i < rows.length; i++) {
-    const diff = (rows[i].ts - rows[i - 1].ts) / 60000; // ms → min
-    steps.push(diff);
-  }
-  steps.sort((a, b) => a - b);
-  const median = steps[Math.floor(steps.length / 2)];
-  // Rond af naar 15 of 60
+  for (let i=1;i<rows.length;i++) steps.push((rows[i].ts - rows[i-1].ts)/60000);
+  steps.sort((a,b)=>a-b);
+  const median = steps[Math.floor(steps.length/2)];
   return median <= 20 ? 15 : 60;
 }
 
-// ══════════════════════════════════════════════════════════════
-// 6. CO2 BEREKENING
-// ══════════════════════════════════════════════════════════════
+/* ============================================================
+   3) CO2 (fallback factors)
+============================================================ */
+function computeCO2Extended(rows) {
+  // fallback emissiefactoren
+  const EF_ELEKTRA_G_PER_KWH = 389;      // g/kWh
+  const EF_WARMTE_G_PER_KWH  = 220;      // g/kWh
+  const EF_GAS_G_PER_M3      = 1884;     // g/m3
 
-/**
- * computeCO2 — Berekent totale CO2 (kg) en gemiddelde emissiefactor.
- */
-function computeCO2(rows, mapping, defaultEF, exportMode) {
-  const validRows = rows.filter(r => !isNaN(r.kwh));
-  const hasEF     = mapping.emission && validRows.some(r => r.ef != null && !isNaN(r.ef));
-  const hasImport = mapping.importKwh && validRows.some(r => r.importKwh != null);
-  const hasExport = mapping.exportKwh && validRows.some(r => r.exportKwh != null);
+  let totElektra = 0, totWarmte = 0, totGas = 0, totOpwek = 0;
+  let co2_g = 0;
 
-  let totalCO2_g = 0;
-  let totalKwhForCO2 = 0;
-  let weightedEFSum = 0;
-  let weightedEFKwh = 0;
+  rows.forEach(r => {
+    const e = (isNaN(r.elektra) ? 0 : r.elektra);
+    const w = (isNaN(r.warmte) ? 0 : r.warmte);
+    const g = (isNaN(r.gas) ? 0 : r.gas);
+    const o = (isNaN(r.opwek) ? 0 : r.opwek);
 
-  validRows.forEach(r => {
-    // Bepaal welke kWh-waarde te gebruiken voor CO2
-    let kwhForCO2 = r.kwh;
-    if (hasImport && exportMode === 'import')  kwhForCO2 = r.importKwh ?? r.kwh;
-    if (hasImport && hasExport && exportMode === 'net') {
-      kwhForCO2 = Math.max(0, (r.importKwh ?? r.kwh) - (r.exportKwh ?? 0));
-    }
-    // exportMode === 'gross' → gebruik verbruikskolom (r.kwh)
+    totElektra += e;
+    totWarmte += w;
+    totGas += g;
+    totOpwek += o;
 
-    const ef = (hasEF && r.ef != null && !isNaN(r.ef)) ? r.ef : defaultEF;
-    const co2_g = kwhForCO2 * ef;
-    totalCO2_g += co2_g;
-    totalKwhForCO2 += kwhForCO2;
-
-    if (hasEF && r.ef != null && !isNaN(r.ef)) {
-      weightedEFSum += r.ef * r.kwh;
-      weightedEFKwh += r.kwh;
-    }
+    co2_g += (e * EF_ELEKTRA_G_PER_KWH) + (w * EF_WARMTE_G_PER_KWH) + (g * EF_GAS_G_PER_M3);
   });
 
-  sanityCheck(totalCO2_g, 'totalCO2_g');
-  sanityCheck(totalKwhForCO2, 'totalKwhForCO2');
-
-  const totalKwh     = validRows.reduce((s, r) => s + r.kwh, 0);
-  const avgEF        = hasEF && weightedEFKwh > 0 ? weightedEFSum / weightedEFKwh : defaultEF;
-  const co2PerKwh    = totalKwhForCO2 > 0 ? totalCO2_g / totalKwhForCO2 : defaultEF;
+  const co2PerKwh = totElektra > 0 ? (co2_g / totElektra) : EF_ELEKTRA_G_PER_KWH;
 
   return {
-    totalKwh,
-    totalCO2_kg: totalCO2_g / 1000,
-    co2PerKwh,
-    avgEF,
-    hasEF,
-    usedDefaultEF: defaultEF,
-    exportMode,
+    totElektra,
+    totWarmte,
+    totGas,
+    totOpwek,
+    totalCO2_kg: co2_g / 1000,
+    co2PerKwh
   };
 }
 
-// ══════════════════════════════════════════════════════════════
-// 7. SCORE BEREKENINGEN
-// ══════════════════════════════════════════════════════════════
-
-/**
- * computeScores — Berekent alle drie scores.
- */
+/* ============================================================
+   4) Scores (elektra-profiel)
+============================================================ */
 function computeScores(rows, peakPct, offpeakPct) {
-  const validRows = rows.filter(r => !isNaN(r.kwh) && r.kwh >= 0);
-  const kwhValues = validRows.map(r => r.kwh);
+  const valid = rows.filter(r => !isNaN(r.kwh) && r.kwh >= 0);
+  if (!valid.length) throw new Error('Geen geldige (elektra) kWh-waarden gevonden.');
 
-  // ── C1: Vlakheid ──────────────────────────────────────
-  const maxKwh  = Math.max(...kwhValues);
+  const kwhValues = valid.map(r => r.kwh);
+
+  // A) Flatness (PAR)
+  const maxKwh = Math.max(...kwhValues);
   const meanKwh = mean(kwhValues);
-  const PAR     = meanKwh > 0 ? maxKwh / meanKwh : 1;
-  const PAR_BEST  = 1.2;
+  const PAR = meanKwh > 0 ? maxKwh / meanKwh : 1;
+  const PAR_BEST = 1.2;
   const PAR_WORST = 4.0;
-  const scoreFlatness = clamp(
-    100 * (PAR_WORST - PAR) / (PAR_WORST - PAR_BEST),
-    0, 100
-  );
+  const flat = clamp(100 * (PAR_WORST - PAR) / (PAR_WORST - PAR_BEST), 0, 100);
 
-  sanityCheck(PAR, 'PAR');
-  sanityCheck(scoreFlatness, 'scoreFlatness');
+  // B) TOU (grid_signal -> price inverted)
+  const hasSignal = valid.some(r => r.signal != null && !isNaN(r.signal));
+  const hasPrice  = valid.some(r => r.price  != null && !isNaN(r.price));
 
-  // ── C2: Time of Use ───────────────────────────────────
   let touSignalType = 'none';
-  let touAlignment  = null;
-  let scoreTop10    = null;
-  let scoreBottom10 = null;
-  let touSignalValues = null; // Voor export/charts
+  let signalArr = null;
+  let touAlignment = null;
 
-  const hasGridSignal = validRows.some(r => r.signal != null && !isNaN(r.signal));
-  const hasPrice      = validRows.some(r => r.price != null && !isNaN(r.price));
-  const hasEF         = validRows.some(r => r.ef != null && !isNaN(r.ef));
-
-  if (hasGridSignal) {
+  if (hasSignal) {
     touSignalType = 'grid_signal';
-    touSignalValues = validRows.map(r => r.signal ?? 0);
-    touAlignment = weightedMean(kwhValues, touSignalValues);
+    signalArr = valid.map(r => (r.signal != null && !isNaN(r.signal)) ? clamp(r.signal,0,1) : 0);
+    touAlignment = weightedMean(kwhValues, signalArr);
   } else if (hasPrice) {
     touSignalType = 'price';
-    const prices = validRows.map(r => r.price ?? 0);
+    const prices = valid.map(r => (r.price != null && !isNaN(r.price)) ? r.price : null).filter(v => v != null);
     const pMin = Math.min(...prices);
     const pMax = Math.max(...prices);
-    touSignalValues = prices.map(p => pMax > pMin ? 1 - (p - pMin) / (pMax - pMin) : 0.5);
-    touAlignment = weightedMean(kwhValues, touSignalValues);
-  } else if (hasEF) {
-    touSignalType = 'emission';
-    const efs = validRows.map(r => r.ef ?? 0);
-    const efMin = Math.min(...efs);
-    const efMax = Math.max(...efs);
-    touSignalValues = efs.map(e => efMax > efMin ? 1 - (e - efMin) / (efMax - efMin) : 0.5);
-    touAlignment = weightedMean(kwhValues, touSignalValues);
+    signalArr = valid.map(r => {
+      const p = (r.price != null && !isNaN(r.price)) ? r.price : pMax;
+      return (pMax > pMin) ? (1 - (p - pMin) / (pMax - pMin)) : 0.5;
+    });
+    touAlignment = weightedMean(kwhValues, signalArr);
   }
 
-  const scoreTOU = touAlignment != null ? Math.round(100 * touAlignment) : null;
+  const scoreTOU = (touAlignment != null) ? Math.round(100 * touAlignment) : null;
 
-  // Top/bottom 10% kWh verdeling
-  if (touSignalValues) {
-    const sorted = validRows.map((r, i) => ({ kwh: r.kwh, sig: touSignalValues[i] }))
-      .sort((a, b) => b.sig - a.sig);
-    const top10Cnt    = Math.max(1, Math.round(sorted.length * 0.1));
-    const bottom10Cnt = Math.max(1, Math.round(sorted.length * 0.1));
-    const topKwh    = sorted.slice(0, top10Cnt).reduce((s, r) => s + r.kwh, 0);
-    const bottomKwh = sorted.slice(-bottom10Cnt).reduce((s, r) => s + r.kwh, 0);
-    const totalKwh  = kwhValues.reduce((s, v) => s + v, 0);
-    scoreTop10    = totalKwh > 0 ? (topKwh / totalKwh * 100).toFixed(1) : 0;
-    scoreBottom10 = totalKwh > 0 ? (bottomKwh / totalKwh * 100).toFixed(1) : 0;
+  // C) Flexibiliteit (peak share x (1 - flatness + 0.2))
+  const sorted = [...kwhValues].sort((a,b)=>b-a);
+  const peakCount = Math.max(1, Math.round(sorted.length * peakPct));
+  const offCount = Math.max(1, Math.round(sorted.length * offpeakPct));
+  const peakKwh = sum(sorted.slice(0, peakCount));
+  const totalKwh = sum(sorted);
+  const peakShare = totalKwh > 0 ? (peakKwh / totalKwh) : 0;
+  const constraint = flat / 100;
+  const flex = clamp(100 * peakShare * (1 - constraint + 0.2), 0, 100);
+
+  // TOU top/bottom 10% shares (optioneel)
+  let top10 = null, bottom10 = null;
+  if (signalArr) {
+    const pair = valid.map((r,i)=>({kwh:r.kwh, sig:signalArr[i]})).sort((a,b)=>b.sig-a.sig);
+    const cnt = Math.max(1, Math.round(pair.length * 0.1));
+    top10 = (sum(pair.slice(0,cnt).map(x=>x.kwh)) / totalKwh * 100).toFixed(1);
+    bottom10 = (sum(pair.slice(-cnt).map(x=>x.kwh)) / totalKwh * 100).toFixed(1);
   }
-
-  // ── C3: Flexibiliteit ─────────────────────────────────
-  const sorted = [...kwhValues].sort((a, b) => b - a); // descending
-  const peakCount    = Math.max(1, Math.round(sorted.length * peakPct));
-  const offpeakCount = Math.max(1, Math.round(sorted.length * offpeakPct));
-  const peakKwh    = sorted.slice(0, peakCount).reduce((s, v) => s + v, 0);
-  const offpeakKwh = sorted.slice(-offpeakCount).reduce((s, v) => s + v, 0);
-  const totalKwhSum = kwhValues.reduce((s, v) => s + v, 0);
-  const peakShare   = totalKwhSum > 0 ? peakKwh / totalKwhSum : 0;
-  const offpeakMean = offpeakCount > 0 ? offpeakKwh / offpeakCount : 0;
-  const constraint  = scoreFlatness / 100;
-  const scoreFlex   = clamp(
-    100 * peakShare * (1 - constraint + 0.2),
-    0, 100
-  );
-
-  sanityCheck(scoreFlex, 'scoreFlex');
 
   return {
-    // Flatness
-    scoreFlatness: Math.round(scoreFlatness),
+    scoreFlatness: Math.round(flat),
     maxKwh, meanKwh, PAR,
-    // TOU
+
     scoreTOU,
     touSignalType,
     touAlignment,
-    scoreTop10,
-    scoreBottom10,
-    touSignalValues,
-    // Flex
-    scoreFlex: Math.round(scoreFlex),
+    touSignalValues: signalArr,
+    scoreTop10: top10,
+    scoreBottom10: bottom10,
+
+    scoreFlex: Math.round(flex),
     peakShare,
     peakPct,
     offpeakPct,
     constraint,
-    offpeakMean,
-    // Raw arrays voor charts
-    validRows,
-    kwhValues,
+
+    validRows: valid
   };
 }
 
-// ══════════════════════════════════════════════════════════════
-// 8. KPI RENDERING
-// ══════════════════════════════════════════════════════════════
+/* ============================================================
+   5) Rendering: KPI + charts + explain
+============================================================ */
+function renderKpis(co2, scores) {
+  setText('kpiElektra', fmt(co2.totElektra, 1));
+  setText('kpiWarmte',  fmt(co2.totWarmte, 1));
+  setText('kpiGas',     fmt(co2.totGas, 1));
+  setText('kpiOpwek',   fmt(co2.totOpwek, 1));
 
-/**
- * renderKpis — Vult alle KPI-kaarten in.
- */
-function renderKpis(co2, scores, rows) {
-  setText('kpiKwh',      fmt(co2.totalKwh, 1));
   setText('kpiCO2',      fmt(co2.totalCO2_kg, 1));
   setText('kpiCO2perKwh', fmt(co2.co2PerKwh, 0));
+
   setText('kpiFlatness', scores.scoreFlatness);
-  setText('kpiPAR',      fmt(scores.PAR, 2));
+  setText('kpiPAR', fmt(scores.PAR, 2));
   setScoreBar('flatnessBar', scores.scoreFlatness);
 
   if (scores.scoreTOU != null) {
@@ -1240,7 +890,7 @@ function renderKpis(co2, scores, rows) {
     setScoreBar('touBar', scores.scoreTOU);
   } else {
     setText('kpiTOU', 'N/A');
-    document.getElementById('touBar').style.width = '0%';
+    $('touBar').style.width = '0%';
   }
 
   setText('kpiFlex', scores.scoreFlex);
@@ -1249,379 +899,346 @@ function renderKpis(co2, scores, rows) {
 
 function setScoreBar(id, score) {
   requestAnimationFrame(() => {
-    document.getElementById(id).style.width = clamp(score, 0, 100) + '%';
+    const el = $(id);
+    if (el) el.style.width = clamp(score, 0, 100) + '%';
   });
 }
 
-// ══════════════════════════════════════════════════════════════
-// 9. GRAFIEKEN
-// ══════════════════════════════════════════════════════════════
-
-/**
- * renderCharts — Bouwt alle Chart.js grafieken en de heatmap.
- */
-function renderCharts(rows, mapping, scores) {
+function renderCharts(rows, co2, scores) {
   destroyCharts();
 
-  // ── 1) Tijdreeks ──────────────────────────────────────
-  const tsLabels = rows.map(r => formatDate(r.ts));
-  // Sample down als > 2000 punten (voor performance)
+  // timeseries
+  const labels = rows.map(r => formatDate(r.ts));
+  const kwh = rows.map(r => r.kwh);
+
+  // sample for perf
   const maxPts = 2000;
   const step = rows.length > maxPts ? Math.ceil(rows.length / maxPts) : 1;
-  const sampledLabels = [];
-  const sampledKwh    = [];
-  const sampledSignal = [];
-  const hasSignal = scores.touSignalValues && scores.touSignalValues.length === rows.length;
+  const labS = [], kwhS = [], co2S = [], sigS = [];
+
+  const EF_ELEKTRA = 389; // fallback voor CO2 timeseries
+  const hasSignal = scores.touSignalValues && scores.touSignalValues.length === scores.validRows.length;
 
   rows.forEach((r, i) => {
     if (i % step === 0) {
-      sampledLabels.push(tsLabels[i]);
-      sampledKwh.push(r.kwh);
-      if (hasSignal) sampledSignal.push(scores.touSignalValues[i]);
+      labS.push(labels[i]);
+      kwhS.push(r.kwh);
+      co2S.push((r.kwh * EF_ELEKTRA) / 1000); // kg per interval (elektra)
     }
   });
 
-  const tsCtx = document.getElementById('chartTimeseries').getContext('2d');
-  chartInstances.timeseries = new Chart(tsCtx, {
-    type: 'line',
-    data: {
-      labels: sampledLabels,
-      datasets: [{
-        label: 'kWh',
-        data: sampledKwh,
-        borderColor: '#1a1a18',
-        backgroundColor: 'rgba(26,26,24,0.05)',
-        borderWidth: 1,
-        pointRadius: 0,
-        fill: true,
-        tension: 0.15,
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
-      scales: {
-        x: {
-          ticks: { maxTicksLimit: 12, maxRotation: 0 },
-          grid: { color: '#d8d7d2' },
-        },
-        y: {
-          beginAtZero: true,
-          grid: { color: '#d8d7d2' },
-          title: { display: true, text: 'kWh' },
-        },
-      },
-    },
+  chartInstances.timeseries = new Chart($('chartTimeseries'), {
+    type:'line',
+    data:{ labels: labS, datasets:[{
+      label:'kWh', data:kwhS,
+      borderColor:'#1a1a18', backgroundColor:'rgba(26,26,24,0.05)',
+      borderWidth:1, pointRadius:0, fill:true, tension:0.15
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{mode:'index',intersect:false}},
+      scales:{
+        x:{ ticks:{maxTicksLimit:12,maxRotation:0}, grid:{color:'#d8d7d2'} },
+        y:{ beginAtZero:true, grid:{color:'#d8d7d2'}, title:{display:true,text:'kWh'} }
+      }
+    }
   });
 
-  // ── 2) Gemiddeld verbruik per uur van de dag ───────────
+  chartInstances.co2ts = new Chart($('chartCO2TS'), {
+    type:'line',
+    data:{ labels: labS, datasets:[{
+      label:'kg CO₂', data:co2S,
+      borderColor:'#e07a2f', backgroundColor:'rgba(224,122,47,0.08)',
+      borderWidth:1, pointRadius:0, fill:true, tension:0.15
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false}, tooltip:{mode:'index',intersect:false}},
+      scales:{
+        x:{ ticks:{maxTicksLimit:12,maxRotation:0}, grid:{color:'#d8d7d2'} },
+        y:{ beginAtZero:true, grid:{color:'#d8d7d2'}, title:{display:true,text:'kg CO₂'} }
+      }
+    }
+  });
+
+  // hourly avg
   const hourlyAvg = computeHourlyAverage(rows);
-  const hourlyCtx = document.getElementById('chartHourly').getContext('2d');
-  const hourLabels = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2,'0')}:00`);
-  chartInstances.hourly = new Chart(hourlyCtx, {
-    type: 'bar',
-    data: {
-      labels: hourLabels,
-      datasets: [{
-        label: 'Gem. kWh',
-        data: hourlyAvg,
-        backgroundColor: hourlyAvg.map(v => {
-          const max = Math.max(...hourlyAvg);
-          const norm = max > 0 ? v / max : 0;
-          const alpha = 0.15 + 0.7 * norm;
-          return `rgba(26,26,24,${alpha.toFixed(2)})`;
-        }),
-        borderColor: '#1a1a18',
-        borderWidth: 1,
-        borderRadius: 0,
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { color: '#d8d7d2' } },
-        y: { beginAtZero: true, grid: { color: '#d8d7d2' }, title: { display: true, text: 'gem. kWh' } },
-      },
-    },
+  const hourLabels = Array.from({length:24},(_,i)=>`${String(i).padStart(2,'0')}:00`);
+  chartInstances.hourly = new Chart($('chartHourly'), {
+    type:'bar',
+    data:{ labels:hourLabels, datasets:[{
+      label:'Gem. kWh', data:hourlyAvg,
+      backgroundColor: hourlyAvg.map(v=>{
+        const mx = Math.max(...hourlyAvg);
+        const n = mx>0 ? v/mx : 0;
+        const a = 0.15 + 0.7*n;
+        return `rgba(26,26,24,${a.toFixed(2)})`;
+      }),
+      borderColor:'#1a1a18', borderWidth:1, borderRadius:0
+    }]},
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{display:false} },
+      scales:{
+        x:{ grid:{color:'#d8d7d2'} },
+        y:{ beginAtZero:true, grid:{color:'#d8d7d2'}, title:{display:true,text:'gem. kWh'} }
+      }
+    }
   });
 
-  // ── 3) Signaal vs kWh chart (als aanwezig) ────────────
-  if (hasSignal) {
-    document.getElementById('signalChartCard').style.display = 'block';
-    const hourlySignal = computeHourlyAverageSignal(rows, scores.touSignalValues);
-    const sigCtx = document.getElementById('chartSignal').getContext('2d');
-    chartInstances.signal = new Chart(sigCtx, {
-      type: 'bar',
-      data: {
-        labels: hourLabels,
-        datasets: [
-          {
-            label: 'Gem. kWh',
-            data: hourlyAvg,
-            backgroundColor: 'rgba(26,26,24,0.12)',
-            borderColor: '#1a1a18',
-            borderWidth: 1,
-            borderRadius: 0,
-            yAxisID: 'yKwh',
-          },
-          {
-            label: touSignalLabel(scores.touSignalType),
-            data: hourlySignal,
-            type: 'line',
-            borderColor: '#5a5a56',
-            backgroundColor: 'rgba(90,90,86,0.05)',
-            borderWidth: 1.5,
-            pointRadius: 2,
-            fill: false,
-            yAxisID: 'ySignal',
-          },
-        ],
+  // signal chart (if tou signal exists on full rows -> build hourly from rows + signal)
+  const signalAvailable = rows.some(r => r.signal != null && !isNaN(r.signal)) || rows.some(r => r.price != null && !isNaN(r.price));
+  if (scores.scoreTOU != null && signalAvailable) {
+    $('signalChartCard').style.display = 'block';
+    const hourlySignal = computeHourlyAverageTouSignal(rows, scores);
+    chartInstances.signal = new Chart($('chartSignal'), {
+      type:'bar',
+      data:{
+        labels:hourLabels,
+        datasets:[
+          { label:'Gem. kWh', data:hourlyAvg, backgroundColor:'rgba(26,26,24,0.12)', borderColor:'#1a1a18', borderWidth:1, yAxisID:'yKwh' },
+          { label: touSignalLabel(scores.touSignalType), data:hourlySignal, type:'line', borderColor:'#5a5650',
+            backgroundColor:'rgba(90,90,86,0.06)', borderWidth:1.5, pointRadius:2, fill:false, yAxisID:'ySig' }
+        ]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: true, labels: { boxWidth: 12, font: { size: 11 } } } },
-        scales: {
-          yKwh:   { beginAtZero: true, grid: { color: '#d8d7d2' }, title: { display: true, text: 'kWh' } },
-          ySignal:{ beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Signaal' } },
-          x:      { grid: { color: '#d8d7d2' } },
-        },
-      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:true, labels:{boxWidth:12, font:{size:11}} } },
+        scales:{
+          yKwh:{ beginAtZero:true, grid:{color:'#d8d7d2'}, title:{display:true,text:'kWh'} },
+          ySig:{ beginAtZero:true, position:'right', grid:{drawOnChartArea:false}, title:{display:true,text:'signaal'} },
+          x:{ grid:{color:'#d8d7d2'} }
+        }
+      }
     });
+  } else {
+    $('signalChartCard').style.display = 'none';
   }
 
-  // ── 4) Heatmap: dag × uur ─────────────────────────────
   renderHeatmap(rows);
 }
 
-/**
- * computeHourlyAverage — Berekent het gemiddelde kWh per uur van de dag (0-23).
- */
-function computeHourlyAverage(rows) {
-  const sums  = new Array(24).fill(0);
-  const counts = new Array(24).fill(0);
-  rows.forEach(r => {
-    if (!r.ts || isNaN(r.kwh)) return;
-    const h = r.ts.getHours();
-    sums[h] += r.kwh;
-    counts[h]++;
-  });
-  return sums.map((s, i) => counts[i] > 0 ? parseFloat((s / counts[i]).toFixed(4)) : 0);
-}
-
-/**
- * computeHourlyAverageSignal — Berekent het gemiddelde signaal per uur.
- */
-function computeHourlyAverageSignal(rows, signalValues) {
-  const sums   = new Array(24).fill(0);
-  const counts = new Array(24).fill(0);
-  rows.forEach((r, i) => {
-    if (!r.ts) return;
-    const h = r.ts.getHours();
-    sums[h] += signalValues[i] ?? 0;
-    counts[h]++;
-  });
-  return sums.map((s, i) => counts[i] > 0 ? parseFloat((s / counts[i]).toFixed(4)) : 0);
-}
-
-/**
- * renderHeatmap — Bouwt een dag × uur tabel als simpele heatmap.
- * Rijen = dag van de week (ma-zo), kolommen = uur (0-23).
- */
-function renderHeatmap(rows) {
-  const dayNames = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
-  // JS: 0=zo,1=ma,...,6=za → index 1..7 → 0..6
-  const sums   = Array.from({ length: 7 }, () => new Array(24).fill(0));
-  const counts = Array.from({ length: 7 }, () => new Array(24).fill(0));
-
-  rows.forEach(r => {
-    if (!r.ts || isNaN(r.kwh)) return;
-    const dow = (r.ts.getDay() + 6) % 7; // Ma=0..Zo=6
-    const h   = r.ts.getHours();
-    sums[dow][h] += r.kwh;
-    counts[dow][h]++;
-  });
-
-  const avgs = sums.map((d, di) => d.map((s, hi) => counts[di][hi] > 0 ? s / counts[di][hi] : null));
-
-  // Vind max voor kleurschaal
-  let globalMax = 0;
-  avgs.forEach(d => d.forEach(v => { if (v != null && v > globalMax) globalMax = v; }));
-
-  // Bouw tabel
-  const hours = Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2,'0')}`);
-  let html = `<table class="heatmap-table">
-    <thead><tr><th></th>${hours.map(h => `<th>${h}</th>`).join('')}</tr></thead>
-    <tbody>`;
-
-  avgs.forEach((dayData, di) => {
-    html += `<tr><td class="row-label">${dayNames[di]}</td>`;
-    dayData.forEach(v => {
-      if (v == null) {
-        html += `<td style="background:#1e2535" title="geen data">—</td>`;
-      } else {
-        const norm = globalMax > 0 ? v / globalMax : 0;
-        const bg = heatColor(norm);
-        const textColor = norm > 0.5 ? '#ffffff' : '#1a1a18';
-        html += `<td style="background:${bg};color:${textColor}" title="${fmt(v, 3)} kWh">${fmt(v, 2)}</td>`;
-      }
-    });
-    html += '</tr>';
-  });
-
-  html += '</tbody></table>';
-  document.getElementById('heatmapWrap').innerHTML = html;
-}
-
-/**
- * heatColor — Geeft een kleur terug op basis van 0-1 intensity.
- * Lichtgrijs (laag) → midgrijs → donker (hoog)
- */
-function heatColor(norm) {
-  // Van #f5f4f0 (achtergrond) naar #1a1a18 (inkt)
-  const lightness = Math.round(240 - 210 * norm);
-  return `rgb(${lightness},${lightness},${Math.round(lightness * 0.97)})`;
-}
-
-function touSignalLabel(type) {
-  if (type === 'grid_signal') return 'Grid-signaal';
-  if (type === 'price') return '1 − norm. prijs';
-  if (type === 'emission') return '1 − norm. EF';
-  return 'Signaal';
-}
-
-function destroyCharts() {
-  Object.values(chartInstances).forEach(c => { try { c.destroy(); } catch(e) {} });
-  chartInstances = {};
-}
-
-// ══════════════════════════════════════════════════════════════
-// 10. EXPLAINABILITY DETAILS
-// ══════════════════════════════════════════════════════════════
-
-function renderExplainDetails(scores, co2) {
-  // Flatness details
-  document.getElementById('flatnessDetails').innerHTML = `
+function renderExplainDetails(scores) {
+  $('flatnessDetails').innerHTML = `
     <span>max kWh:</span> ${fmt(scores.maxKwh, 3)} &nbsp;|&nbsp;
     <span>gem kWh:</span> ${fmt(scores.meanKwh, 3)} &nbsp;|&nbsp;
     <span>PAR:</span> ${fmt(scores.PAR, 3)} &nbsp;|&nbsp;
     <span>Score:</span> ${scores.scoreFlatness} / 100
   `;
 
-  // TOU details
-  const touEl = document.getElementById('touDetails');
+  const touEl = $('touDetails');
   if (scores.scoreTOU != null) {
-    const signalNames = {
-      grid_signal: 'Grid-signaal (0-1)',
-      price:       'Prijs per kWh (geïnverteerd)',
-      emission:    'Emissiefactor (geïnverteerd)',
-    };
+    const names = { grid_signal:'Grid-signaal (0–1)', price:'Prijs (geïnverteerd)' };
     touEl.innerHTML = `
-      <span>Signaaltype:</span> ${signalNames[scores.touSignalType] || '—'} &nbsp;|&nbsp;
+      <span>Signaaltype:</span> ${names[scores.touSignalType] || '—'} &nbsp;|&nbsp;
       <span>TOU alignment:</span> ${fmt(scores.touAlignment, 3)} &nbsp;|&nbsp;
-      <span>Score:</span> ${scores.scoreTOU} / 100<br/>
-      <span>% kWh in beste 10%:</span> ${scores.scoreTop10}% &nbsp;|&nbsp;
-      <span>% kWh in slechtste 10%:</span> ${scores.scoreBottom10}%
+      <span>Score:</span> ${scores.scoreTOU} / 100<br>
+      <span>% kWh in beste 10%:</span> ${scores.scoreTop10 ?? '—'}% &nbsp;|&nbsp;
+      <span>% kWh in slechtste 10%:</span> ${scores.scoreBottom10 ?? '—'}%
     `;
   } else {
-    touEl.innerHTML = `<div class="tou-no-signal">Geen TOU-signaal beschikbaar. Upload een grid_signal, price of emission_factor kolom om TOU te berekenen.</div>`;
+    touEl.innerHTML = `Geen TOU-signaal beschikbaar. Upload een grid-signaal kolom (0–1) of een prijskolom (€/kWh).`;
   }
 
-  // Flex details
-  document.getElementById('flexDetails').innerHTML = `
+  $('flexDetails').innerHTML = `
     <span>peak_share:</span> ${fmt(scores.peakShare * 100, 1)}% &nbsp;|&nbsp;
     <span>score_flatness:</span> ${scores.scoreFlatness} &nbsp;|&nbsp;
     <span>constraint:</span> ${fmt(scores.constraint, 2)} &nbsp;|&nbsp;
-    <span>Score flex:</span> ${scores.scoreFlex} / 100<br/>
-    <span>Piek-drempel X:</span> ${Math.round(scores.peakPct * 100)}% &nbsp;|&nbsp;
-    <span>Dal-drempel Y:</span> ${Math.round(scores.offpeakPct * 100)}%
+    <span>Score flex:</span> ${scores.scoreFlex} / 100
   `;
 }
 
-// ══════════════════════════════════════════════════════════════
-// 11. WAARSCHUWINGEN
-// ══════════════════════════════════════════════════════════════
-
 function renderWarnings(warnings) {
-  const box = document.getElementById('validationWarnings');
-  if (!warnings.length) {
-    box.classList.add('hidden');
-    return;
-  }
+  const box = $('validationWarnings');
+  if (!box) return;
+  if (!warnings.length) { box.classList.add('hidden'); box.innerHTML=''; return; }
   box.classList.remove('hidden');
-  box.innerHTML = `<h4>⚠ Validatie-meldingen</h4>` + warnings.join('<br/>');
+  box.innerHTML = `<h4>⚠ Validatie-meldingen</h4>` + warnings.map(w => escapeHtml(w)).join('<br>');
 }
 
-// ══════════════════════════════════════════════════════════════
-// 12. EXPORT FUNCTIES
-// ══════════════════════════════════════════════════════════════
+function renderIntervalKpi(intervalMin, rows) {
+  const hLabel = intervalMin<=15 ? 'Kwartier' : 'Uur';
+  setText('kpiInterval', hLabel);
 
-/**
- * downloadJSON — Exporteert alle berekende waarden als JSON.
- */
+  const n = rows.length;
+  if (n < 2) { setText('kpiIntervalSub', n + ' meetpunt'); return; }
+
+  const spanMin = (rows[n-1].ts - rows[0].ts)/60000;
+  const spanLabel = spanMin < 60 ? `${spanMin.toFixed(0)} min`
+                 : spanMin < 1440 ? `${(spanMin/60).toFixed(1)} uur`
+                 : `${(spanMin/1440).toFixed(1)} dagen`;
+  setText('kpiIntervalSub', `${n.toLocaleString('nl-NL')} punten · ${spanLabel}`);
+}
+
+/* ============================================================
+   6) Heatmap
+============================================================ */
+function renderHeatmap(rows) {
+  const dayNames = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+  const sums = Array.from({length:7},()=>Array(24).fill(0));
+  const cnts = Array.from({length:7},()=>Array(24).fill(0));
+
+  rows.forEach(r=>{
+    if (!r.ts || isNaN(r.kwh)) return;
+    const dow = (r.ts.getDay()+6)%7;
+    const h = r.ts.getHours();
+    sums[dow][h]+=r.kwh;
+    cnts[dow][h]+=1;
+  });
+
+  const avgs = sums.map((d,di)=>d.map((s,hi)=>cnts[di][hi]>0 ? s/cnts[di][hi] : null));
+  let mx = 0;
+  avgs.forEach(d=>d.forEach(v=>{ if(v!=null && v>mx) mx=v; }));
+
+  const hours = Array.from({length:24},(_,i)=>String(i).padStart(2,'0'));
+  let html = `<table class="hm-table">
+    <thead><tr><th></th>${hours.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+
+  avgs.forEach((dayData, di) => {
+    html += `<tr><td class="rl">${dayNames[di]}</td>`;
+    dayData.forEach(v=>{
+      if (v==null) html += `<td title="geen data">—</td>`;
+      else {
+        const norm = mx>0 ? v/mx : 0;
+        const bg = heatColor(norm);
+        const tc = norm>0.5 ? '#ffffff' : '#1a1a18';
+        html += `<td style="background:${bg};color:${tc}" title="${fmt(v,3)} kWh">${fmt(v,2)}</td>`;
+      }
+    });
+    html += `</tr>`;
+  });
+
+  html += `</tbody></table>`;
+  $('heatmapWrap').innerHTML = html;
+}
+
+function heatColor(norm) {
+  const lightness = Math.round(240 - 210 * norm);
+  return `rgb(${lightness},${lightness},${Math.round(lightness * 0.97)})`;
+}
+
+/* ============================================================
+   7) Hourly helpers
+============================================================ */
+function computeHourlyAverage(rows) {
+  const sums = Array(24).fill(0);
+  const cnts = Array(24).fill(0);
+  rows.forEach(r=>{
+    if (!r.ts || isNaN(r.kwh)) return;
+    const h = r.ts.getHours();
+    sums[h]+=r.kwh; cnts[h]+=1;
+  });
+  return sums.map((s,i)=>cnts[i]>0 ? +(s/cnts[i]).toFixed(4) : 0);
+}
+
+function computeHourlyAverageTouSignal(rows, scores) {
+  const sums = Array(24).fill(0);
+  const cnts = Array(24).fill(0);
+
+  // reconstruct signal value per row (same logic as score)
+  const sig = rows.map(r => {
+    if (scores.touSignalType === 'grid_signal') {
+      return (r.signal != null && !isNaN(r.signal)) ? clamp(r.signal,0,1) : 0;
+    }
+    if (scores.touSignalType === 'price') {
+      // normaliseer op basis van dataset
+      return (r.price != null && !isNaN(r.price)) ? r.price : null;
+    }
+    return null;
+  });
+
+  if (scores.touSignalType === 'price') {
+    const ps = sig.filter(v=>v!=null);
+    const pMin = Math.min(...ps), pMax = Math.max(...ps);
+    for (let i=0;i<sig.length;i++) {
+      const p = (sig[i]==null) ? pMax : sig[i];
+      sig[i] = (pMax>pMin) ? (1 - (p - pMin)/(pMax - pMin)) : 0.5;
+    }
+  }
+
+  rows.forEach((r,i)=>{
+    if (!r.ts) return;
+    const h=r.ts.getHours();
+    sums[h]+= (sig[i] ?? 0);
+    cnts[h]+=1;
+  });
+
+  return sums.map((s,i)=>cnts[i]>0 ? +(s/cnts[i]).toFixed(4) : 0);
+}
+
+function touSignalLabel(type) {
+  if (type === 'grid_signal') return 'Grid-signaal';
+  if (type === 'price') return '1 − norm. prijs';
+  return 'Signaal';
+}
+
+/* ============================================================
+   8) Tabs + accordions
+============================================================ */
+function switchTab(btn, panelId) {
+  document.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('on'));
+  $(panelId)?.classList.add('on');
+}
+
+function toggleAcc(head) {
+  head.classList.toggle('open');
+  const body = head.nextElementSibling;
+  if (!body) return;
+  body.classList.toggle('open');
+}
+
+/* ============================================================
+   9) Export + reset
+============================================================ */
 function downloadJSON() {
   if (!analysisResult) return;
-  const { co2Result, scores } = analysisResult;
   const payload = {
     meta: {
-      intervalMin: analysisResult.intervalMin,
       rows: analysisResult.cleanRows.length,
-      exportedAt: new Date().toISOString(),
+      intervalMin: analysisResult.intervalMin,
+      exportedAt: new Date().toISOString()
     },
-    co2: {
-      totalKwh:    co2Result.totalKwh,
-      totalCO2_kg: co2Result.totalCO2_kg,
-      co2PerKwh:   co2Result.co2PerKwh,
-      avgEF:       co2Result.avgEF,
-      hasEF:       co2Result.hasEF,
-      exportMode:  co2Result.exportMode,
-    },
+    co2: analysisResult.co2Result,
     scores: {
       flatness: {
-        score:   scores.scoreFlatness,
-        PAR:     scores.PAR,
-        maxKwh:  scores.maxKwh,
-        meanKwh: scores.meanKwh,
+        score: analysisResult.scores.scoreFlatness,
+        PAR: analysisResult.scores.PAR,
+        maxKwh: analysisResult.scores.maxKwh,
+        meanKwh: analysisResult.scores.meanKwh
       },
       tou: {
-        score:        scores.scoreTOU,
-        signalType:   scores.touSignalType,
-        touAlignment: scores.touAlignment,
-        top10pct:     scores.scoreTop10,
-        bottom10pct:  scores.scoreBottom10,
+        score: analysisResult.scores.scoreTOU,
+        signalType: analysisResult.scores.touSignalType,
+        alignment: analysisResult.scores.touAlignment
       },
       flexibility: {
-        score:      scores.scoreFlex,
-        peakShare:  scores.peakShare,
-        constraint: scores.constraint,
-        peakPct:    scores.peakPct,
-        offpeakPct: scores.offpeakPct,
-      },
-    },
+        score: analysisResult.scores.scoreFlex,
+        peakShare: analysisResult.scores.peakShare
+      }
+    }
   };
   downloadBlob(JSON.stringify(payload, null, 2), 'energieprofiel_resultaten.json', 'application/json');
 }
 
-/**
- * downloadCSV — Exporteert een KPI-overzicht als CSV.
- */
 function downloadCSV() {
   if (!analysisResult) return;
-  const { co2Result, scores } = analysisResult;
+  const c = analysisResult.co2Result;
+  const s = analysisResult.scores;
   const rows = [
-    ['KPI', 'Waarde', 'Eenheid'],
-    ['Totaal verbruik',     fmt(co2Result.totalKwh, 2),    'kWh'],
-    ['CO2-uitstoot',        fmt(co2Result.totalCO2_kg, 2), 'kg CO2'],
-    ['CO2 per kWh',         fmt(co2Result.co2PerKwh, 1),   'gCO2/kWh'],
-    ['Score Vlakheid',      scores.scoreFlatness,           '/100'],
-    ['PAR',                 fmt(scores.PAR, 3),             '—'],
-    ['Score TOU',           scores.scoreTOU ?? 'N/A',       '/100'],
-    ['TOU signaaltype',     scores.touSignalType,           '—'],
-    ['Score Flexibiliteit', scores.scoreFlex,               '/100'],
-    ['Piekandeel',          fmt(scores.peakShare * 100, 1), '%'],
+    ['KPI','Waarde','Eenheid'],
+    ['Elektra totaal', fmt(c.totElektra, 2), 'kWh'],
+    ['Warmte totaal', fmt(c.totWarmte, 2), 'kWh'],
+    ['Gas totaal', fmt(c.totGas, 2), 'm³'],
+    ['Opwek totaal', fmt(c.totOpwek, 2), 'kWh'],
+    ['CO2 uitstoot', fmt(c.totalCO2_kg, 2), 'kg CO2'],
+    ['CO2 per kWh (elektra)', fmt(c.co2PerKwh, 1), 'g/kWh'],
+    ['Score Vlakheid', s.scoreFlatness, '/100'],
+    ['PAR', fmt(s.PAR, 3), '—'],
+    ['Score TOU', s.scoreTOU ?? 'N/A', '/100'],
+    ['Score Flexibiliteit', s.scoreFlex, '/100'],
+    ['Piek aandeel', fmt(s.peakShare*100, 1), '%']
   ];
   const csv = rows.map(r => r.join(';')).join('\n');
   downloadBlob(csv, 'energieprofiel_samenvatting.csv', 'text/csv;charset=utf-8;');
@@ -1629,450 +1246,126 @@ function downloadCSV() {
 
 function downloadBlob(content, filename, mime) {
   const blob = new Blob([content], { type: mime });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = filename;
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download=filename;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
-// ══════════════════════════════════════════════════════════════
-// 13. RESET / UI STATE
-// ══════════════════════════════════════════════════════════════
-
 function resetDashboard() {
-  document.getElementById('dashboard').classList.add('hidden');
-  document.getElementById('mappingSection').classList.add('hidden');
-  document.getElementById('uploadSection').classList.remove('hidden');
-  document.getElementById('validationWarnings').classList.add('hidden');
-  document.getElementById('fileInput').value = '';
-  document.getElementById('heatmapWrap').innerHTML = '';
   destroyCharts();
   rawData = [];
   analysisResult = null;
-  document.getElementById('intervalBadge').style.display = 'none';
-  document.getElementById('rowsBadge').style.display = 'none';
+  columnHeaders = [];
+
+  $('fileInput').value = '';
+  $('previewTable').innerHTML = '';
+  $('heatmapWrap').innerHTML = '';
+
+  $('dashboard').classList.add('hidden');
+  $('mappingSection').classList.add('hidden');
+  $('uploadSection').classList.remove('hidden');
+
+  $('validationWarnings').classList.add('hidden');
+  $('intervalBadge').classList.add('hidden');
+  $('rowsBadge').classList.add('hidden');
 }
 
 function updateHeaderBadges(rowCount, intervalMin) {
-  const ib = document.getElementById('intervalBadge');
-  const rb = document.getElementById('rowsBadge');
-  ib.textContent = `${intervalMin}-min interval`;
-  rb.textContent = `${rowCount.toLocaleString('nl-NL')} rijen`;
-  ib.style.display = 'inline';
-  rb.style.display = 'inline';
+  const ib = $('intervalBadge');
+  const rb = $('rowsBadge');
+  if (ib) { ib.textContent = `${intervalMin}-min interval`; ib.classList.remove('hidden'); }
+  if (rb) { rb.textContent = `${rowCount.toLocaleString('nl-NL')} rijen`; rb.classList.remove('hidden'); }
 }
 
-function showLoading(show) {
-  document.getElementById('loadingOverlay').classList.toggle('hidden', !show);
+function destroyCharts() {
+  Object.values(chartInstances).forEach(c => { try { c.destroy(); } catch(e) {} });
+  chartInstances = {};
 }
 
-// ══════════════════════════════════════════════════════════════
-// 14. HULPFUNCTIES
-// ══════════════════════════════════════════════════════════════
+/* ============================================================
+   10) NED placeholder (non-blocking)
+============================================================ */
+function setNedStatus(state, msg) {
+  const dot = $('nedDot');
+  const txt = $('nedStatusText');
+  if (!dot || !txt) return;
+  dot.classList.remove('ok','err','loading');
+  if (state === 'ok') dot.classList.add('ok');
+  if (state === 'err') dot.classList.add('err');
+  if (state === 'loading') dot.classList.add('loading');
+  txt.textContent = msg;
+}
 
-/** Parset een getal veilig (ook kommagetallen). */
+async function testNedApi() {
+  const key = $('nedApiKey')?.value?.trim();
+  if (!key) { alert('Voer een API-sleutel in.'); return; }
+  setNedStatus('loading','Verbinden...');
+  // In deze MVP doen we geen fetch (om CORS/endpoint issues te vermijden).
+  // Dit blokkeert niets; je kunt later de echte NED-fetch toevoegen.
+  setTimeout(() => {
+    nedConnected = true;
+    setNedStatus('ok','Verbonden (placeholder)');
+    $('nedBadge')?.classList.remove('hidden');
+  }, 600);
+}
+
+function useDefaultEF() {
+  nedConnected = false;
+  setNedStatus('err','Standaard EF actief');
+  $('nedBadge')?.classList.add('hidden');
+}
+
+/* ============================================================
+   11) Utility
+============================================================ */
+function showLoading(show, msg) {
+  const ov = $('loadingOverlay');
+  const lm = $('loadingMsg');
+  if (lm && msg) lm.textContent = msg;
+  if (ov) ov.classList.toggle('hidden', !show);
+}
+
 function parseFloatSafe(v) {
   if (v == null || v === '') return NaN;
   if (typeof v === 'number') return v;
   return parseFloat(String(v).replace(',', '.'));
 }
+function mean(arr){ return arr.length ? sum(arr)/arr.length : 0; }
+function sum(arr){ return arr.reduce((s,v)=>s+v,0); }
 
-/** Rekenkundig gemiddelde */
-function mean(arr) {
-  if (!arr.length) return 0;
-  return arr.reduce((s, v) => s + v, 0) / arr.length;
-}
-
-/** Gewogen gemiddelde: Σ(v[i]*w[i]) / Σ(w[i]) */
+// weightedMean(values=kWh, weights=signal) => Σ(kWh*signal)/Σ(kWh)
 function weightedMean(values, weights) {
-  let num = 0, den = 0;
-  for (let i = 0; i < values.length; i++) {
-    num += values[i] * weights[i];
-    den += values[i];
-  }
-  return den > 0 ? num / den : 0;
+  let num=0, den=0;
+  for (let i=0;i<values.length;i++){ num += values[i]*weights[i]; den += values[i]; }
+  return den>0 ? num/den : 0;
 }
-
-/** Begrenst een waarde tussen min en max */
-function clamp(v, mn, mx) {
-  return Math.max(mn, Math.min(mx, v));
-}
-
-/** Formateert een getal met n decimalen */
-function fmt(v, n = 2) {
+function clamp(v,mn,mx){ return Math.max(mn, Math.min(mx, v)); }
+function fmt(v,n=2){
   if (v == null || isNaN(v)) return '—';
-  return Number(v).toLocaleString('nl-NL', { minimumFractionDigits: n, maximumFractionDigits: n });
+  return Number(v).toLocaleString('nl-NL', { minimumFractionDigits:n, maximumFractionDigits:n });
 }
-
-/** Formateert een datum */
-function formatDate(d) {
+function formatDate(d){
   if (!d) return '';
-  return d.toLocaleDateString('nl-NL', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleDateString('nl-NL', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
 }
-
-/** Zet tekst in een element */
-function setText(id, text) {
-  const el = document.getElementById(id);
+function fmtDate(d){
+  if (!d) return '';
+  return d.toLocaleDateString('nl-NL', { year:'numeric', month:'short', day:'numeric' });
+}
+function setText(id, text){
+  const el = $(id);
   if (el) el.textContent = text;
 }
-
-/** Sanity check voor NaN/Infinity (console warning) */
-function sanityCheck(v, name) {
-  if (isNaN(v))      console.warn(`[SANITY] ${name} is NaN`);
-  if (!isFinite(v))  console.warn(`[SANITY] ${name} is Infinity`);
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, (m) => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
+  }[m]));
 }
-
-
-// ── GLOBALS ──
-let analysisResult = null;
-let nedEfData = {};
-let nedConnected = false;
-let nedWorkingType = null;
-
-// ── NED API ──
-function setNedStatus(state, msg) {
-  const el = document.getElementById('nedStatus');
-  if (!el) return;
-  const colors = { loading: 'var(--amber)', ok: 'var(--green)', err: 'var(--red)' };
-  el.textContent = msg;
-  el.style.color = colors[state] || 'var(--text2)';
-}
-
-async function testNedApi() {
-  const key = document.getElementById('nedApiKey').value.trim();
-  if (!key) { alert('Voer een API-sleutel in.'); return; }
-  setNedStatus('loading', 'Verbinden...');
-  document.getElementById('nedApiKey').dataset.key = key;
-
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-  for (const typeVal of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]) {
-    try {
-      const url = `https://api.ned.nl/v1/utilizations?granularity=5&type=${typeVal}&validfrom%5Bafter%5D=${yesterday}T00%3A00%3A00%2B02%3A00&itemsPerPage=1`;
-      const res = await fetch(url, { headers: { 'X-AUTH-TOKEN': key, 'Accept': 'application/json' } });
-      const body = await res.text();
-      if (res.ok) {
-        let n = '?';
-        try { const d = JSON.parse(body); n = d['hydra:totalItems'] ?? d['hydra:member']?.length ?? '?'; } catch(e) {}
-        nedConnected = true;
-        nedWorkingType = typeVal;
-        setNedStatus('ok', `Verbonden (type ${typeVal}) — ${n} punten`);
-        document.getElementById('nedBadge')?.classList.remove('hidden');
-        document.getElementById('nedApiKey').dataset.key = key;
-        return;
-      } else if (typeVal === 1) {
-        // Sla eerste fout op voor diagnose
-        let errMsg = `HTTP ${res.status}`;
-        try { const j = JSON.parse(body); errMsg += ': ' + (j['hydra:description'] ?? j.detail ?? j.title ?? body.slice(0,150)); } catch(e) { errMsg += ': ' + body.slice(0,150); }
-        console.warn('NED type 1 fout:', errMsg);
-      }
-    } catch(e) { console.warn('NED type', typeVal, 'fout:', e.message); }
-  }
-
-  // Alle types gefaald: toon rauwe diagnose van type=1
-  nedConnected = false;
-  try {
-    const url = `https://api.ned.nl/v1/utilizations?granularity=5&type=1&validfrom%5Bafter%5D=${yesterday}T00%3A00%3A00%2B02%3A00&itemsPerPage=1`;
-    const dr = await fetch(url, { headers: { 'X-AUTH-TOKEN': key, 'Accept': 'application/json' } });
-    const db = await dr.text();
-    let msg = `HTTP ${dr.status}`;
-    try { const j = JSON.parse(db); msg += ': ' + (j['hydra:description'] ?? j.detail ?? j.title ?? db.slice(0,200)); } catch(e) { msg += ': ' + db.slice(0,200); }
-    setNedStatus('err', 'Mislukt: ' + msg);
-  } catch(e) {
-    setNedStatus('err', 'Netwerkfout: ' + e.message);
-  }
-}
-
-async function fetchNedEF(dateFrom, dateTo) {
-  const key = document.getElementById('nedApiKey')?.dataset.key;
-  if (!key || !nedConnected) return {};
-  try {
-    setLoadingMsg('NED CO₂-data ophalen...');
-    const toISO = d => d.toISOString().replace('Z', '+00:00');
-    const from = toISO(dateFrom), to = toISO(dateTo);
-    const result = {};
-    const typeList = nedWorkingType ? [String(nedWorkingType)] : ['1','2','3','4','5','6','7','8','9','10'];
-    for (const typeVal of typeList) {
-      try {
-        const baseUrl = 'https://api.ned.nl/v1/utilizations';
-        const params = new URLSearchParams({
-          granularity: '5', granularitytimezone: 'Europe/Amsterdam',
-          classification: '2', activity: '1', type: typeVal, point: '0',
-          'validfrom[after]': from, 'validfrom[before]': to, itemsPerPage: '200'
-        });
-        let nextUrl = `${baseUrl}?${params}`, pages = 0;
-        while (nextUrl && pages < 30) {
-          const res = await fetch(nextUrl, { headers: { 'X-AUTH-TOKEN': key, 'Accept': 'application/ld+json' } });
-          if (!res.ok) break;
-          const data = await res.json();
-          const items = data['hydra:member'] ?? [];
-          if (!items.length) break;
-          items.forEach(item => {
-            const vf = item.validfrom ?? item.validFrom ?? ''; if (!vf) return;
-            const tsUtc = new Date(vf).toISOString().slice(0, 13);
-            let ef = null;
-            if (item.emission != null && parseFloat(item.emission) > 0) ef = parseFloat(item.emission);
-            else if (item.co2emission != null && item.volume != null && parseFloat(item.volume) > 0)
-              ef = (parseFloat(item.co2emission) / parseFloat(item.volume)) * 1000;
-            if (ef != null && !isNaN(ef) && ef > 0 && ef < 2000)
-              result[tsUtc] = result[tsUtc] ? (result[tsUtc] + ef) / 2 : ef;
-          });
-          const nextPath = data['hydra:view']?.['hydra:next'];
-          nextUrl = nextPath ? (nextPath.startsWith('http') ? nextPath : 'https://api.ned.nl' + nextPath) : null;
-          pages++;
-        }
-      } catch(e) { /* type niet beschikbaar */ }
-    }
-    return result;
-  } catch(e) { console.warn('NED fout:', e); return {}; }
-}
-
-function setLoadingMsg(msg) {
-  const el = document.getElementById('loadingMsg');
-  if (el) el.textContent = msg;
-}
-
-// ── WEii BEREKENINGEN ──
-const WEII_GRENZEN = {
-  'kantoor':         [0,   25,  50,  75, 100, 150],
-  'school':          [0,   20,  40,  65,  90, 135],
-  'zorginstelling':  [0,   40,  80, 120, 160, 220],
-  'winkel':          [0,   50, 100, 150, 200, 280],
-  'logies':          [0,   60, 120, 180, 240, 320],
-  'sporthal':        [0,   30,  60, 100, 140, 200],
-  'bijeenkomst':     [0,   25,  55,  85, 115, 170],
-  'industrie':       [0,   80, 160, 240, 320, 450],
-  'overig':          [0,   40,  80, 120, 180, 260],
-};
-const KLASSE_NAMEN = ['WENG','Paris Proof','Zeer Zuinig','Zuinig','Gemiddeld','Onzuinig','Zeer Onzuinig'];
-const KLASSE_CSS   = ['cls-weng','cls-paris','cls-zzuinig','cls-zuinig','cls-gemiddeld','cls-onzuinig','cls-zonzuinig'];
-
-function computeWeii(co2Result, rows, mapping) {
-  const ag = parseFloat(document.getElementById('weiiAg')?.value);
-  const type = document.getElementById('weiiGebruikstype')?.value || 'kantoor';
-  const grenzen = WEII_GRENZEN[type] || WEII_GRENZEN['overig'];
-  if (!ag || ag <= 0) return { score: null, klasse: null, grenzen, ag: null };
-
-  const totElektra = co2Result.totElektra || 0;
-  const totWarmte  = co2Result.totWarmte  || 0;
-  const totGas     = co2Result.totGas     || 0;
-  const totOpwek   = co2Result.totOpwek   || 0;
-  // Teruglevering = opwek - eigengebruik (schatting: max 60% teruglevering)
-  const teruglevering = totOpwek * 0.4;
-  const eigenGebruik  = totOpwek - teruglevering;
-
-  // WEii = (E_in_elekra + E_warmte*0.33 + E_gas*9.77 - E_terug) / Ag
-  const eIn    = totElektra + totWarmte * 0.33 + totGas * 9.77;
-  const eTot   = eIn - teruglevering;
-
-  // Schaal naar jaar
-  const tsArr = rows.map(r => r.ts).filter(Boolean).sort((a,b)=>a-b);
-  let factor = 1, nDagen = 0;
-  if (tsArr.length > 1) {
-    nDagen = (tsArr[tsArr.length-1] - tsArr[0]) / 86400000;
-    if (nDagen > 0 && nDagen < 350) factor = 365 / nDagen;
-  }
-
-  const weiiScore = Math.round(eTot * factor / ag);
-  let klasse = 6;
-  for (let i = 0; i < grenzen.length; i++) {
-    if (weiiScore <= grenzen[i]) { klasse = i; break; }
-    if (i === grenzen.length - 1 && weiiScore > grenzen[i]) klasse = 6;
-  }
-
-  // WEiifinaal
-  const weiiFinaal = Math.round((eIn + eigenGebruik) * factor / ag);
-
-  // WEiigas
-  const weiiGas = totGas > 0 ? Math.round(totGas * 9.77 * factor / ag) : null;
-
-  // WEiiCO2
-  const co2kg = co2Result.totalCO2_kg || 0;
-  const weiiCO2 = Math.round(co2kg * factor / ag * 10) / 10;
-
-  // Dekkingsgraad
-  const finaal = eIn + eigenGebruik - teruglevering;
-  const dekkingsgraad = totOpwek > 0 ? Math.round(eigenGebruik / finaal * 1000) / 10 : null;
-  const benuttingsfactor = totOpwek > 0 ? Math.round(eigenGebruik / totOpwek * 1000) / 10 : null;
-
-  return { score: weiiScore, klasse, grenzen, ag, factor, nDagen, weiiFinaal, weiiGas, weiiCO2, dekkingsgraad, benuttingsfactor, eigenGebruik };
-}
-
-function computeCO2Extended(rows, mapping, efData) {
-  let totElektra=0, totWarmte=0, totGas=0, totOpwek=0, totalCO2=0;
-  const EF_ELEKTRA=389, EF_WARMTE=220*0.33, EF_GAS=1884;
-  rows.forEach(r => {
-    const e = r.elektra || 0;
-    const w = r.warmte  || 0;
-    const g = r.gas     || 0;
-    const op= r.opwek   || 0;
-    totElektra += e; totWarmte += w; totGas += g; totOpwek += op;
-    // CO2
-    const tsKey = r.ts ? r.ts.toISOString().slice(0,13) : '';
-    const ef = efData[tsKey] ?? EF_ELEKTRA;
-    totalCO2 += e * ef + w * EF_WARMTE + g * EF_GAS;
-  });
-  return {
-    totElektra: Math.round(totElektra * 10) / 10,
-    totWarmte:  Math.round(totWarmte  * 10) / 10,
-    totGas:     Math.round(totGas     * 10) / 10,
-    totOpwek:   Math.round(totOpwek   * 10) / 10,
-    totalCO2_kg: Math.round(totalCO2 / 1000),
-    co2PerKwh: totElektra > 0 ? Math.round(totalCO2 / totElektra / 10) * 10 : 0,
-  };
-}
-
-// ── WEII RENDER ──
-function renderWeiiDetails(weii, co2, rows, mapping) {
-  const sv = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
-  if (weii.score != null && weii.grenzen) {
-    sv('weiiValScore', weii.score);
-    const badge = `<span class="class-badge ${KLASSE_CSS[weii.klasse]}">${KLASSE_NAMEN[weii.klasse]}</span>`;
-    const nInfo = weii.nDagen > 0 ? ` <span style="font-size:11px;color:var(--text3)">(${weii.nDagen.toFixed(0)} dgn, factor ${weii.factor.toFixed(2)}×)</span>` : '';
-    sv('weiiDetails', badge + nInfo);
-  } else { sv('weiiValScore','&mdash;'); sv('weiiDetails','<span class="wi-na">Stel gebouwtype + Ag in</span>'); }
-
-  if (weii.weiiFinaal != null) {
-    sv('weiiValFinaal', weii.weiiFinaal);
-    sv('weiiFinaalDetails', `<span style="font-size:11.5px;color:var(--text2)">+${Math.round((weii.weiiFinaal-weii.score)*10)/10} kWh/m² t.o.v. WEii (PV eigen gebruik)</span>`);
-  } else { sv('weiiValFinaal','&mdash;'); sv('weiiFinaalDetails','<span class="wi-na">Vereist opwekkolom + Ag</span>'); }
-
-  if (weii.weiiGas != null) {
-    sv('weiiValGas', weii.weiiGas);
-    sv('weiiGasDetails', `<span style="font-size:11.5px;color:var(--text2)">${fmt(co2.totGas,0)} m³ gas → ${fmt(co2.totGas*9.77,0)} kWh/jaar</span>`);
-  } else { sv('weiiValGas','&mdash;'); sv('weiiGasDetails','<span class="wi-na">Vereist gaskolom + Ag</span>'); }
-
-  sv('weiiValCO2', weii.weiiCO2 ?? '&mdash;');
-  sv('weiiCO2Details', weii.weiiCO2 ? `<span style="font-size:11.5px;color:var(--text2)">Totaal: ${fmt(co2.totalCO2_kg,0)} kg CO₂/jaar</span>` : '<span class="wi-na">Vereist Ag</span>');
-
-  if (weii.dekkingsgraad != null) {
-    sv('weiiValDek', weii.dekkingsgraad + '%');
-    sv('weiiDekkingDetails', `<span style="font-size:11.5px;color:var(--text2)">${fmt(weii.eigenGebruik,0)} kWh eigen gebruik</span>`);
-  } else { sv('weiiValDek','&mdash;'); sv('weiiDekkingDetails','<span class="wi-na">Vereist opwekkolom</span>'); }
-
-  if (weii.benuttingsfactor != null) {
-    sv('weiiValBen', weii.benuttingsfactor + '%');
-    sv('weiiBenuttingDetails', `<span style="font-size:11.5px;color:var(--text2)">${fmt(co2.totOpwek,0)} kWh totale opwek</span>`);
-  } else { sv('weiiValBen','&mdash;'); sv('weiiBenuttingDetails','<span class="wi-na">Vereist opwekkolom</span>'); }
-}
-
-function calcBesparing() {
-  const ref = parseFloat(document.getElementById('weiiRef')?.value);
-  if (!analysisResult?.weii) { alert('Voer eerst een analyse uit.'); return; }
-  const score = analysisResult.weii.score;
-  if (score == null) { alert('Geen WEii-score beschikbaar.'); return; }
-  if (isNaN(ref) || ref <= 0) { alert('Voer een geldige referentie-WEii in (kWh/m²).'); return; }
-  const besp = Math.round((1 - score / ref) * 1000) / 10;
-  const sv = (id, v) => { const e = document.getElementById(id); if (e) e.innerHTML = v; };
-  sv('weiiValBesp', besp + '%');
-  const color = besp > 0 ? 'var(--green)' : besp < 0 ? 'var(--red)' : 'var(--text2)';
-  sv('weiiBesparingDetails', `<span style="font-size:11.5px;color:${color}">${besp > 0 ? '▼' : '▲'} ${Math.abs(besp)}% t.o.v. referentie ${fmt(ref, 0)} kWh/m²</span>`);
-}
-
-// ── TIJDINTERVAL KPI ──
-function renderIntervalKpi(intervalMin, rows) {
-  const hLabel = intervalMin<=1?'Minuut':intervalMin<=15?'Kwartier':intervalMin<=60?'Uur':intervalMin<=1440?'Dag':intervalMin<=10080?'Week':'Jaar';
-  const sv = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
-  sv('kpiInterval', hLabel);
-  const n = rows.length;
-  if (n < 2) { sv('kpiIntervalSub', n + ' meetpunt'); return; }
-  const spanMin = (rows[n-1].ts - rows[0].ts) / 1000 / 60;
-  const spanLabel = spanMin < 60 ? `${spanMin.toFixed(0)} min` : spanMin < 1440 ? `${(spanMin/60).toFixed(1)} uur` : spanMin < 10080 ? `${(spanMin/1440).toFixed(1)} dagen` : `${(spanMin/10080).toFixed(1)} weken`;
-  sv('kpiIntervalSub', `${n.toLocaleString('nl-NL')} punten · ${spanLabel}`);
-}
-
-// ── ENERGIEKOMPAS ──
-function renderEnergiekompas(weiiResult) {
-  const label = document.getElementById('energielabel')?.value;
-  const notice  = document.getElementById('energiekompasNotice');
-  const wrap    = document.getElementById('energiekompasWrap');
-  const legend  = document.getElementById('energiekompasLegend');
-  if (!label || weiiResult?.klasse == null) {
-    notice?.classList.remove('hidden'); if(wrap) wrap.innerHTML=''; legend?.classList.add('hidden'); return;
-  }
-  notice?.classList.add('hidden'); legend?.classList.remove('hidden');
-
-  // X-as: G(links/slecht) → A++++(rechts/goed)
-  const labels  = ['G','F','E','D','C','B','A','A+','A++','A+++','A++++'];
-  // Y-as: Zeer Onzuinig(boven/slecht) → WENG(onder/goed)
-  const klassen = ['Zeer Onzuinig','Onzuinig','Gemiddeld','Zuinig','Zeer Zuinig','Paris Proof','WENG'];
-
-  const labelIdx  = labels.indexOf(label);
-  // Protocol: klasse 0=WENG(goed)..6=Zeer Onzuinig(slecht) → omdraaien voor display
-  const weiiIdx   = 6 - weiiResult.klasse; // 0=WENG(onder), 6=Zeer Onzuinig(boven)
-
-  function cellColor(wi, li) {
-    // wi: 0=WENG(goed/onder), 6=Zeer Onzuinig(slecht/boven)
-    // li: 0=G(slecht/links), 10=A++++(goed/rechts)
-    const wBad = wi / 6;  // 0=goed, 1=slecht
-    const lBad = 1 - li/10; // 0=goed(A++++), 1=slecht(G)
-    const diff = wBad - lBad; // positief = weii slechter dan label
-    if (Math.abs(diff) <= 0.15) return { bg: '#dcfce7', border: '#86efac', label: 'Consistent' };
-    if (diff > 0.35) return { bg: '#fee2e2', border: '#fca5a5', label: 'Groot prestatiegat' };
-    if (diff > 0.15) return { bg: '#fef9c3', border: '#fde047', label: 'Licht prestatiegat' };
-    if (diff < -0.15) return { bg: '#eff6ff', border: '#bfdbfe', label: 'Beter dan label' };
-    return { bg: '#f0fdf4', border: '#bbf7d0', label: 'Consistent' };
-  }
-
-  const cW=52, cH=30, lW=92, hH=34;
-  const svgW = lW + labels.length * cW + 2;
-  const svgH = hH + klassen.length * cH + 2;
-
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}" style="font-family:'Poppins',sans-serif;display:block;">`;
-  svg += `<rect width="${svgW}" height="${svgH}" fill="#faf9f7" rx="4"/>`;
-
-  // Header X-as
-  svg += `<text x="${lW + labels.length*cW/2}" y="13" text-anchor="middle" font-size="9" font-weight="600" fill="#9c9690" letter-spacing="1">ENERGIELABEL →</text>`;
-  labels.forEach((l, li) => {
-    const x = lW + li * cW;
-    const sel = li === labelIdx;
-    if (sel) svg += `<rect x="${x}" y="16" width="${cW}" height="${hH-16}" fill="#e07a2f" rx="2"/>`;
-    svg += `<text x="${x+cW/2}" y="${hH-5}" text-anchor="middle" font-size="11" font-weight="${sel?700:500}" fill="${sel?'#fff':'#5a5650'}">${l}</text>`;
-  });
-
-  // Rijen Y-as (Zeer Onzuinig bovenaan rij 0, WENG onderaan rij 6)
-  klassen.forEach((kl, wi) => {
-    const y = hH + wi * cH;
-    const selRow = wi === weiiIdx;
-    svg += `<rect x="0" y="${y}" width="${lW}" height="${cH}" fill="${selRow?'#e07a2f':'#f0ede8'}"/>`;
-    svg += `<text x="${lW-8}" y="${y+cH/2+4}" text-anchor="end" font-size="9.5" font-weight="${selRow?600:400}" fill="${selRow?'#fff':'#5a5650'}">${kl}</text>`;
-    labels.forEach((l, li) => {
-      const x = lW + li * cW;
-      const c = cellColor(wi, li);
-      const cur = wi === weiiIdx && li === labelIdx;
-      svg += `<rect x="${x}" y="${y}" width="${cW}" height="${cH}" fill="${c.bg}" stroke="${cur?'#1c1a17':c.border}" stroke-width="${cur?2:.4}"/>`;
-      if (cur) {
-        svg += `<circle cx="${x+cW/2}" cy="${y+cH/2}" r="9" fill="#1c1a17" opacity=".85"/>`;
-        svg += `<text x="${x+cW/2}" y="${y+cH/2+4}" text-anchor="middle" font-size="12" fill="#fff">●</text>`;
-      }
-    });
-  });
-
-  svg += `<text transform="rotate(-90)" x="${-(hH+klassen.length*cH/2)}" y="10" text-anchor="middle" font-size="9" font-weight="600" fill="#9c9690" letter-spacing="1">↑ WEii-KLASSE</text>`;
-  svg += '</svg>';
-
-  // Tekstduiding
-  const diff = (weiiIdx/6) - (1 - labelIdx/10);
-  let duiding = '';
-  const wNaam = klassen[weiiIdx], lNaam = label;
-  if (Math.abs(diff) <= 0.15) duiding = `Uw gebouw is <strong>consistent</strong>: het werkelijk energiegebruik (WEii: ${wNaam}) sluit goed aan bij energielabel ${lNaam}.`;
-  else if (diff > 0.35) duiding = `<strong>Groot prestatiegat:</strong> label ${lNaam} suggereert een zuinig gebouw, maar WEii-klasse ${wNaam} toont dat het werkelijk gebruik veel hoger ligt. Nader onderzoek aanbevolen.`;
-  else if (diff > 0.15) duiding = `<strong>Licht prestatiegat:</strong> werkelijk gebruik (${wNaam}) is iets hoger dan label ${lNaam} verwacht. Controleer installaties en gebruiksgedrag.`;
-  else duiding = `<strong>Beter dan label verwacht:</strong> WEii-klasse ${wNaam} is gunstiger dan label ${lNaam} suggereert. Mogelijk door bewust energiebeheer.`;
-
-  if (wrap) wrap.innerHTML = svg + `<div class="nb" style="margin-top:10px;font-size:12.5px;">${duiding}</div>`;
-}
-
-// ── UTILITY ──
-function fmt(v, n=2) {
-  if (v == null || isNaN(v)) return '—';
-  return Number(v).toLocaleString('nl-NL', { minimumFractionDigits: n, maximumFractionDigits: n });
-}
-function setText(id, txt) { const e = document.getElementById(id); if (e) e.textContent = txt; }
-function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
-
 </script>
+
 </body>
 </html>
