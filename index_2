@@ -854,8 +854,10 @@ dropZone.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
 
 // \u2500\u2500 FILE HANDLING \u2500\u2500
+let lastFileName = '';
 function handleFile(file) {
   showLoading(true);
+  lastFileName = file ? file.name : '';
   const reader = new FileReader();
   reader.onload = e => {
     try { parseExcel(e.target.result); }
@@ -880,7 +882,7 @@ function parseExcel(buffer) {
   if (dz) {
     dz.style.padding = '10px 16px';
     dz.style.minHeight = '0';
-    dz.querySelector('.upload-zone-title').textContent = file ? (file.name || 'Bestand geladen') : 'Bestand geladen';
+    dz.querySelector('.upload-zone-title').textContent = lastFileName || 'Bestand geladen';
     dz.querySelector('.upload-zone-sub').textContent = rawData.length + ' rijen \u00b7 ' + columnHeaders.length + ' kolommen';
   }
   document.getElementById('mappingSection').scrollIntoView({behavior:'smooth', block:'start'});
