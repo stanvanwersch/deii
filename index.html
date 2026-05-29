@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEII — Dynamische Energie-intensiteit Indicator</title>
+<meta name="description" content="WEii-analyse dashboard. Bereken WEii-score, CO2-uitstoot en flexibiliteitsscores vanuit uw energiedata.">
+
+<!-- Externe bibliotheken -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Stijlen -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <img src="data:image/png;base64,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" alt="DGBC" style="height:40px;width:auto;display:block;border-radius:0;">
+    <div style="border-left:1px solid var(--border2);padding-left:12px;margin-left:4px;">
+      <div class="logo-name">Energieprofiel</div>
+      <div class="logo-sub">Dynamische Energie-intensiteit indicator</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="meta-badge hidden" id="intervalBadge"></span>
+    <span class="meta-badge hidden" id="rowsBadge"></span>
+    <span class="meta-badge hidden" id="nedBadge">NED: live</span>
+  </div>
+</header>
+
+<div class="shell">
+
+<!-- UPLOAD -->
+<section id="uploadSection" style="margin-bottom:0;">
+  <h1>Dynamische <em>Energie-intensiteit indicator</em></h1>
+  <p class="lead">Upload een Excel-bestand, koppel de kolommen en stel gebouwinstellingen in. Het dashboard berekent automatisch WEii-indicatoren, CO₂-uitstoot en flexibiliteitsscores.</p>
+
+  <!-- Bestandsvereisten uitklapbaar -->
+  <div class="accordion" style="margin-bottom:16px;">
+    <div class="acc-head" onclick="toggleAcc(this)">
+      <div class="acc-title"><span class="acc-num">?</span>Wat moet er in het Excel-bestand staan?</div>
+      <span class="acc-icon">&#9660;</span>
+    </div>
+    <div class="acc-body"><div class="acc-inner" style="padding:0">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;font-size:12px;">
+
+        <!-- Kolommen -->
+        <div style="border-right:1px solid var(--border);">
+          <div style="background:var(--accent);color:#fff;padding:8px 14px;font-weight:600;font-size:11px;letter-spacing:.5px;text-transform:uppercase;">Kolommen</div>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead><tr>
+              <th style="padding:7px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--cream);">Kolomnaam (suggestie)</th>
+              <th style="padding:7px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--cream);">Eenheid</th>
+              <th style="padding:7px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--cream);">Vereist</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">timestamp</td>
+                <td style="padding:7px 14px;color:var(--text2);">datetime</td>
+                <td style="padding:7px 14px;"><span style="background:var(--accent-s);color:var(--accent);border:1px solid var(--accent-b);border-radius:3px;padding:1px 6px;font-size:10px;font-weight:600;">vereist</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">elektraverbruik_kwh</td>
+                <td style="padding:7px 14px;color:var(--text2);">kWh</td>
+                <td style="padding:7px 14px;"><span style="background:var(--accent-s);color:var(--accent);border:1px solid var(--accent-b);border-radius:3px;padding:1px 6px;font-size:10px;font-weight:600;">vereist</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;color:var(--text2);">warmteverbruik_kwh</td>
+                <td style="padding:7px 14px;color:var(--text2);">kWh &nbsp;<span title="Leveringsgebonden warmte van warmtenet. Weegfactor 0,33 voor primaire energie (WEii-score); CO₂-factor 65 gCO₂/kWh." style="cursor:help;color:var(--blue);font-size:10px;border-bottom:1px dotted var(--blue);">?</span></td>
+                <td style="padding:7px 14px;"><span style="background:var(--cream);color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:10px;">optioneel</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;color:var(--text2);">gasverbruik_m3</td>
+                <td style="padding:7px 14px;color:var(--text2);">m³</td>
+                <td style="padding:7px 14px;"><span style="background:var(--cream);color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:10px;">optioneel</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;color:var(--text2);">opwek_kwh</td>
+                <td style="padding:7px 14px;color:var(--text2);">kWh</td>
+                <td style="padding:7px 14px;"><span style="background:var(--cream);color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:10px;">optioneel</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;color:var(--text2);">prijs_eur_per_kwh</td>
+                <td style="padding:7px 14px;color:var(--text2);">€/kWh</td>
+                <td style="padding:7px 14px;"><span style="background:var(--cream);color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:10px;">optioneel</span></td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;color:var(--text2);">grid_signaal</td>
+                <td style="padding:7px 14px;color:var(--text2);">0 – 1</td>
+                <td style="padding:7px 14px;"><span style="background:var(--cream);color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:10px;">optioneel</span></td>
+              </tr>
+              <tr>
+                <td style="padding:7px 14px;color:var(--text2);">binnentemperatuur_c</td>
+                <td style="padding:7px 14px;color:var(--text2);">°C</td>
+                <td style="padding:7px 14px;"><span style="background:var(--cream);color:var(--text3);border:1px solid var(--border);border-radius:3px;padding:1px 6px;font-size:10px;">optioneel</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="padding:8px 14px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);">Kolomnamen worden automatisch herkend — exacte namen zijn niet vereist.</div>
+        </div>
+
+        <!-- Tijdsintervallen -->
+        <div>
+          <div style="background:var(--accent);color:#fff;padding:8px 14px;font-weight:600;font-size:11px;letter-spacing:.5px;text-transform:uppercase;">Tijdsintervallen</div>
+          <table style="width:100%;border-collapse:collapse;">
+            <thead><tr>
+              <th style="padding:7px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--cream);">Interval</th>
+              <th style="padding:7px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--cream);">Rijen per jaar</th>
+              <th style="padding:7px 14px;text-align:left;font-size:10px;font-weight:600;color:var(--text2);border-bottom:1px solid var(--border);background:var(--cream);">Gebruik</th>
+            </tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">Minuut</td>
+                <td style="padding:7px 14px;color:var(--text2);">525.600</td>
+                <td style="padding:7px 14px;color:var(--text2);">Gedetailleerde piekanalyse</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">Kwartier</td>
+                <td style="padding:7px 14px;color:var(--text2);">35.040</td>
+                <td style="padding:7px 14px;color:var(--text2);">Standaard P1/slimme meter</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">Uur</td>
+                <td style="padding:7px 14px;color:var(--text2);">8.760</td>
+                <td style="padding:7px 14px;color:var(--text2);">Energiemanagementsysteem</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">Dag</td>
+                <td style="padding:7px 14px;color:var(--text2);">365</td>
+                <td style="padding:7px 14px;color:var(--text2);">Dagtotalen uit EMS of meter</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">Week</td>
+                <td style="padding:7px 14px;color:var(--text2);">52</td>
+                <td style="padding:7px 14px;color:var(--text2);">Wekelijkse rapportage</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:7px 14px;font-weight:500;">Maand</td>
+                <td style="padding:7px 14px;color:var(--text2);">12</td>
+                <td style="padding:7px 14px;color:var(--text2);">Factuurdata energieleverancier</td>
+              </tr>
+              <tr>
+                <td style="padding:7px 14px;font-weight:500;">Jaar</td>
+                <td style="padding:7px 14px;color:var(--text2);">≥ 1</td>
+                <td style="padding:7px 14px;color:var(--text2);">Jaaropgave / enkelvoudige meting</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="padding:8px 14px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);">Het interval wordt automatisch gedetecteerd uit de tijdsverschillen in uw data.</div>
+        </div>
+
+      </div>
+
+      <div style="padding:10px 14px;background:var(--blue-s);border-top:1px solid var(--blue-b);font-size:11.5px;color:var(--blue);">
+        <strong>Voorbeeld:</strong> gebruik de meegeleverde oefenbestanden om het dashboard te verkennen.
+        De kolommen worden automatisch herkend op basis van de kolomnaam — u hoeft ze alleen te controleren in de mapping.
+      </div>
+
+    </div></div>
+  </div>
+
+  <div class="upload-zone" id="dropZone">
+    <div class="upload-zone-title">Sleep een Excel-bestand hierheen</div>
+    <div class="upload-zone-sub">of klik om te bladeren — .xlsx, .xls</div>
+    <input type="file" id="fileInput" accept=".xlsx,.xls" hidden>
+    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">Bestand kiezen</button>
+  </div>
+</section>
+
+<!-- MAPPING -->
+<section id="mappingSection" style="margin-top:20px;">
+  <h1>Kolom-mapping &amp; <em>instellingen</em></h1>
+
+  <!-- Compact mapping form -->
+  <div class="mapping-form">
+    <div class="mapping-form-header" style="color:var(--text);">Koppel de kolommen uit uw bestand aan de juiste velden <span style="color:var(--red);font-size:11px;">— controleer en stel in voor analyse</span></div>
+    <div class="mapping-rows">
+      <div class="map-row">
+        <div class="map-row-label">Tijdstempel</div>
+        <div class="map-row-select"><select id="colTimestamp" class="col-select"></select></div>
+        <div class="map-row-badge"><span class="req-tag">vereist</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Elektraverbruik (kWh)</div>
+        <div class="map-row-select"><select id="colElektra" class="col-select"></select></div>
+        <div class="map-row-badge"><span class="req-tag">vereist</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Warmteverbruik (kWh)</div>
+        <div class="map-row-select"><select id="colWarmte" class="col-select"><option value="">(geen)</option></select></div>
+        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Gasverbruik (m³)</div>
+        <div class="map-row-select"><select id="colGas" class="col-select"><option value="">(geen)</option></select></div>
+        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Opwek / teruglevering (kWh)</div>
+        <div class="map-row-select"><select id="colOpwek" class="col-select"><option value="">(geen)</option></select></div>
+        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Prijs (€/kWh)</div>
+        <div class="map-row-select"><select id="colPrice" class="col-select"><option value="">(geen)</option></select></div>
+        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Grid-signaal (0–1)</div>
+        <div class="map-row-select"><select id="colSignal" class="col-select"><option value="">(geen)</option></select></div>
+        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+      </div>
+      <div class="map-row">
+        <div class="map-row-label">Binnentemperatuur (°C)</div>
+        <div class="map-row-select"><select id="colTemp" class="col-select"><option value="">(geen)</option></select></div>
+        <div class="map-row-badge"><span class="opt-tag">optioneel</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compact settings -->
+  <div class="settings-compact">
+    <div class="settings-compact-header">Instellingen</div>
+
+        <!-- Vaste emissiefactoren (WEii-protocol) -->
+    <div style="border-top:1px solid var(--border);">
+      <div style="padding:8px 16px 4px;font-size:10.5px;font-weight:600;color:var(--text3);letter-spacing:.3px;text-transform:uppercase;">Standaard emissiefactoren (WEii-protocol, jaarlijks bijgesteld via weii.nl)</div>
+      <table class="ef-table">
+        <tr><td>Elektriciteit</td><td><span class="fixed-val">389 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— Nederland 2024</span></td></tr>
+        <tr><td>Aardgas</td><td><span class="fixed-val">1,884 kg CO₂/m³</span> <span style="font-size:10.5px;color:var(--text3);">— 9,77 kWh/m³ × weegfactor 1</span></td></tr>
+        <tr><td>Warmte (stadsverwarming)</td><td><span class="fixed-val">220 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— weegfactor 0,33 (WEii Tabel 1)</span></td></tr>
+        <tr><td>Opwek (eigen PV)</td><td><span class="fixed-val">0 gCO₂/kWh</span> <span style="font-size:10.5px;color:var(--text3);">— teruglevering gesaldeerd</span></td></tr>
+      </table>
+    </div>
+
+    <!-- Gebouwinstellingen voor WEii -->
+    <div class="settings-row-compact" style="border-top:1px solid var(--border);">
+      <div class="setting-inline">
+        <label>Gebruikstype</label>
+        <select id="weiiGebruikstype" class="col-select" style="background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;min-width:180px;">
+          <option value="">— kies gebruikstype —</option>
+          <option value="kantoor">Kantoor</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="cafe">Café</option>
+          <option value="kinderopvang">Kinderopvang</option>
+          <option value="sauna">Sauna</option>
+          <option value="bijeenkomst">Bijeenkomst overig</option>
+          <option value="ziekenhuis">Ziekenhuis</option>
+          <option value="tehuis">Tehuis met overnachting</option>
+          <option value="praktijk">Medische praktijk</option>
+          <option value="bedrijfshal">Bedrijfshal</option>
+          <option value="hotel">Hotel</option>
+          <option value="onderwijs_basis">Basis/VO onderwijs</option>
+          <option value="onderwijs_ho">MBO/HBO/Uni</option>
+          <option value="sport_binnen">Sportaccommodatie binnen</option>
+          <option value="zwembad">Zwembad</option>
+          <option value="winkel_koel">Winkel met warenkoeling</option>
+          <option value="winkel">Winkel zonder warenkoeling</option>
+          <option value="appartement">Appartement</option>
+          <option value="woning">Grondgebonden woning</option>
+        </select>
+      </div>
+      <div class="setting-inline">
+        <label>Gebruiksoppervlakte Ag (m²)</label>
+        <input type="number" id="weiiAg" style="background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;width:90px;font-family:var(--sans);" placeholder="bijv. 1200" min="1">
+      </div>
+      <div class="setting-inline">
+        <label>Energielabel</label>
+        <select id="energielabel" style="background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;font-family:var(--sans);min-width:80px;"><option value="">— kies —</option><option value="A++++">A++++</option><option value="A+++">A+++</option><option value="A++">A++</option><option value="A+">A+</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select>
+      </div>
+    </div>
+
+    <!-- Flex scores: vaste waarden, hidden inputs voor JS-compatibiliteit -->
+    <input type="hidden" id="peakPct" value="10">
+    <input type="hidden" id="offpeakPct" value="10">
+  </div>
+
+  <div id="validationWarnings" class="warnings-box hidden"></div>
+
+  <div class="analyse-btn-wrap">
+    <button class="btn btn-primary" onclick="runAnalysis()">Analyseer dataset</button>
+  </div>
+
+  <div class="preview-wrap">
+    <div class="preview-head"><span>Preview — eerste 20 rijen</span></div>
+    <div class="table-scroll"><table id="previewTable" class="data-table"></table></div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="hidden" style="margin-top:28px;">
+
+  <div class="section-eyebrow">Resultaten</div>
+  <h1>Dynamische <em>Energie-intensiteit indicator</em></h1>
+  <p class="lead" id="dashboardSubtitle"></p>
+
+  <!-- KPI kaarten -->
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="kpi-label">Elektra totaal</div>
+      <div class="kpi-value" id="kpiElektra">—</div>
+      <div class="kpi-unit">kWh</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Warmte totaal</div>
+      <div class="kpi-value" id="kpiWarmte">—</div>
+      <div class="kpi-unit">kWh</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Gas totaal</div>
+      <div class="kpi-value" id="kpiGas">—</div>
+      <div class="kpi-unit">m³</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Opwek totaal</div>
+      <div class="kpi-value" id="kpiOpwek">—</div>
+      <div class="kpi-unit">kWh</div>
+    </div>
+    <div class="kpi-card accent">
+      <div class="kpi-label">CO₂ uitstoot</div>
+      <div class="kpi-value" id="kpiCO2">—</div>
+      <div class="kpi-unit">kg CO₂</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">CO₂ intensiteit</div>
+      <div class="kpi-value" id="kpiCO2perKwh">—</div>
+      <div class="kpi-unit">g/kWh</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">Score Vlakheid</div>
+      <div class="kpi-value" id="kpiFlatness">—</div>
+      <div class="kpi-unit">/ 100 · PAR <span id="kpiPAR">—</span></div>
+      <div class="kpi-bar"><div class="kpi-fill blue" id="flatnessBar" style="width:0%"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Score Time of Use</div>
+      <div class="kpi-value" id="kpiTOU">—</div>
+      <div class="kpi-unit">/ 100</div>
+      <div class="kpi-bar"><div class="kpi-fill" id="touBar" style="width:0%"></div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Score Flexibiliteit</div>
+      <div class="kpi-value" id="kpiFlex">—</div>
+      <div class="kpi-unit">/ 100</div>
+      <div class="kpi-bar"><div class="kpi-fill green" id="flexBar" style="width:0%"></div></div>
+    </div>
+    <div class="kpi-card purple">
+      <div class="kpi-label">WEii-score</div>
+      <div class="kpi-value" id="kpiWeii">—</div>
+      <div class="kpi-unit">kWh/m² · <span id="kpiWeiiClass">—</span></div>
+    </div>
+    <div class="kpi-card" style="border-top:2px solid var(--text3);">
+      <div class="kpi-label">Tijdinterval</div>
+      <div class="kpi-value" id="kpiInterval" style="font-size:16px;">—</div>
+      <div class="kpi-unit" id="kpiIntervalSub">detectie op basis van data</div>
+    </div>
+  </div>
+
+  <div id="nedInfoBlock" class="nb hidden"></div>
+
+  <!-- Grafieken -->
+  <h2><span class="h2-num">01</span>Tijdreeksen</h2>
+  <div class="tabs">
+    <button class="tb on" onclick="switchTab(this,'tabElektra')">Elektra</button>
+    <button class="tb" onclick="switchTab(this,'tabCO2TS')">CO₂ tijdreeks</button>
+    <button class="tb" id="tabMixBtn" onclick="switchTab(this,'tabMix')">Energiemix</button>
+  </div>
+  <div class="tab-panel on" id="tabElektra">
+    <div class="chart-card"><div class="chart-title">Elektraverbruik per tijdstip (kWh)</div><div class="chart-wrap"><canvas id="chartTimeseries"></canvas></div></div>
+  </div>
+  <div class="tab-panel" id="tabCO2TS">
+    <div class="chart-card"><div class="chart-title">CO₂-uitstoot elektra per tijdstip (kg)</div><div class="chart-wrap"><canvas id="chartCO2TS"></canvas></div></div>
+  </div>
+  <div class="tab-panel" id="tabMix">
+    <div class="chart-card"><div class="chart-title">Energiemix (kWh / m³ per tijdstip)</div><div class="chart-wrap"><canvas id="chartMix"></canvas></div></div>
+  </div>
+
+  <h2><span class="h2-num">02</span>Dagpatroon &amp; heatmap</h2>
+  <div class="charts-grid">
+    <div class="chart-card"><div class="chart-title">Gemiddeld elektraverbruik per uur van de dag</div><div class="chart-wrap"><canvas id="chartHourly"></canvas></div></div>
+    <div class="chart-card hidden" id="tempChartCard"><div class="chart-title">Uurgemiddelde binnentemperatuur (°C)</div><div class="chart-wrap" style="height:200px"><canvas id="chartTemp"></canvas></div></div>
+    <div class="chart-card" id="signalChartCard" style="display:none"><div class="chart-title">Verbruik vs signaal per uur</div><div class="chart-wrap"><canvas id="chartSignal"></canvas></div></div>
+    <div class="chart-card wide" id="nedChartCard" style="display:none"><div class="chart-title">Gemiddelde NED-emissiefactor per uur (gCO₂/kWh)</div><div class="chart-wrap"><canvas id="chartNedEF"></canvas></div></div>
+  </div>
+  <div class="chart-card" style="margin-bottom:8px;">
+    <div class="chart-title">Dag × Uur gemiddelde elektra (kWh)</div>
+    <div class="heatmap-scroll" id="heatmapWrap"></div>
+  </div>
+
+  <!-- Score-uitleg -->
+  <h2><span class="h2-num">03</span>WEii Energiekompas</h2>
+
+  <div class="accordion">
+    <div class="acc-head open" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num purple">Kompas</span>Energiekompas &mdash; WEii-klasse vs. Energielabel</div><span class="acc-icon" style="transform:rotate(180deg)">&#9660;</span></div>
+    <div class="acc-body open"><div class="acc-inner">
+      <p><strong>Het WEii Energiekompas</strong> toont de relatie tussen het energielabel (theoretisch, gebouwgebonden, NTA 8800) en de WEii-klasse (werkelijk, gebruiksgebonden). Een groot verschil duidt op een <strong>prestatiegat</strong>: het gebouw presteert beter of slechter dan het label suggereert.</p>
+      <div id="energiekompasWrap" style="margin:12px 0;overflow-x:auto;"></div>
+      <div id="energiekompasduiding" class="nb" style="margin-top:10px;font-size:12.5px;display:none;"></div>
+      <div id="energiekompasNotice" class="nb" style="font-size:12px;">Stel een energielabel in (instellingen hierboven) en analyseer een dataset om het Energiekompas te tonen.</div>
+      <div id="energiekompasLegend" class="hidden" style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--text2);">
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#dcfce7;border:1px solid #86efac;display:inline-block"></span>Consistent</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#fef9c3;border:1px solid #fde047;display:inline-block"></span>Licht prestatiegat</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#fee2e2;border:1px solid #fca5a5;display:inline-block"></span>Groot prestatiegat</span>
+        <span style="display:flex;align-items:center;gap:4px;"><span style="width:12px;height:12px;border-radius:2px;background:#eff6ff;border:1px solid #bfdbfe;display:inline-block"></span>Beter dan label verwacht</span>
+      </div>
+    </div></div>
+  </div>
+
+  <h2><span class="h2-num">04</span>Score-toelichting</h2>
+
+  <div class="accordion">
+    <div class="acc-head" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">A</span>Vlakheid — Peak-to-Average Ratio</div><span class="acc-icon">▼</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p><strong>Formule:</strong> PAR = max(kWh) / gemiddelde(kWh)<br>Score = clamp(100 × (4,0 − PAR) / (4,0 − 1,2), 0, 100)</p>
+      <p><strong>Interpretatie:</strong> Hoge score = vlak profiel. Gunstig voor netbelasting en kosten.</p>
+      <div class="val-block" id="flatnessDetails"></div>
+    </div></div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-head" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">B</span>Time of Use</div><span class="acc-icon">▼</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p><strong>Signaalprioriteit:</strong> (1) Grid-signaal, (2) NED-emissiefactor, (3) Prijskolom<br><strong>Formule:</strong> TOU = Σ(kWh_i × signal_i) / Σ(kWh_i) · Score = round(100 × TOU)</p>
+      <div class="val-block" id="touDetails"></div>
+    </div></div>
+  </div>
+
+  <div class="accordion">
+    <div class="acc-head" onclick="toggleAcc(this)"><div class="acc-title"><span class="acc-num">C</span>Flexibiliteit</div><span class="acc-icon">▼</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <p><strong>Formule:</strong> score_flex = clamp(100 × peak_share × (1 − constraint + 0,2), 0, 100)</p>
+      <div class="val-block" id="flexDetails"></div>
+    </div></div>
+  </div>
+
+  <!-- WEii INDICATOREN -->
+  <h2><span class="h2-num">05</span>WEii-indicatoren <span style="font-size:11px;font-weight:300;color:var(--text3);">conform WEii-protocol v3.1 · TVVL &amp; DGBC 2026</span></h2>
+
+  <style>
+  .wi-tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+  .wi-tbl thead th{background:var(--cream);padding:8px 14px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--text2);border-bottom:1.5px solid var(--border2);}
+  .wi-tbl tbody td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  .wi-tbl tbody tr:last-child td{border-bottom:none;}
+  .wi-tbl tbody tr:hover td{background:var(--cream);}
+  .wi-name{font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .wi-sub{font-size:11px;color:var(--text3);font-weight:300;margin-top:1px;}
+  .wi-val{font-weight:600;font-size:13px;color:var(--text);}
+  .wi-na{font-size:11.5px;color:var(--text3);font-weight:300;font-style:italic;}
+  .tti{position:relative;display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--blue-s);border:1px solid var(--blue-b);color:var(--blue);font-size:9px;font-weight:700;cursor:help;flex-shrink:0;}
+  .tti .tt{display:none;position:absolute;left:20px;top:50%;transform:translateY(-50%);z-index:400;background:var(--white);border:1px solid var(--border2);border-radius:var(--r);padding:11px 13px;width:290px;box-shadow:0 4px 16px rgba(0,0,0,.1);pointer-events:none;}
+  .tti:hover .tt,.tti:focus .tt{display:block;}
+  .tt-t{font-size:11.5px;font-weight:600;color:var(--text);margin-bottom:4px;}
+  .tt-d{font-size:11px;color:var(--text2);font-weight:300;line-height:1.55;margin-bottom:5px;}
+  .tt-f{font-size:10px;font-family:monospace;background:var(--cream);border:1px solid var(--border);border-radius:3px;padding:3px 6px;color:var(--blue);margin-bottom:4px;display:block;}
+  .tt-s{font-size:10px;color:var(--text3);}
+  .besp-row{display:flex;align-items:center;gap:7px;margin-top:6px;flex-wrap:wrap;}
+  .besp-row input{background:var(--cream);border:1px solid var(--border2);padding:4px 8px;border-radius:var(--r);font-size:12px;width:85px;font-family:var(--sans);}
+  </style>
+
+  <div style="border:1px solid var(--border);border-radius:var(--r);background:var(--white);overflow:hidden;">
+  <table class="wi-tbl">
+    <thead><tr>
+      <th style="width:36%">Indicator</th>
+      <th style="width:22%">Waarde</th>
+      <th>Klasse / toelichting</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="wi-name">WEii-score
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEii — Werkelijke Energie Intensiteit Indicator</div>
+              <div class="tt-d">Werkelijk gemeten energiegebruik per m² per jaar. Gebaseerd op netafname minus teruglevering, gecorrigeerd voor weersinvloeden.</div>
+              <code class="tt-f">WEii = (E_in − E_uit + E_cor;verw) / Ag</code>
+              <div class="tt-s">WEii-protocol v3.1, §6.1 &nbsp;·&nbsp; kWh/m²·jaar</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">Werkelijke energie-intensiteit</div>
+        </td>
+        <td><span class="wi-val" id="weiiValScore">—</span> <span style="font-size:11px;color:var(--text3)">kWh/m²</span></td>
+        <td id="weiiDetails"><span class="wi-na">Stel gebouwtype + Ag in</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">WEiiₙᵥⁿ
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEiifinaal — Finaal energiegebruik</div>
+              <div class="tt-d">Netto energiegebruik inclusief het direct eigen gebruik van lokale PV-opwek. Geeft inzicht in de totale energievraag inclusief wat op het dak wordt opgewekt en direct verbruikt.</div>
+              <code class="tt-f">WEiifinaal = (E_in + E_opwek − E_terug − E_uitgesl) / Ag</code>
+              <div class="tt-s">WEii-protocol v3.1, §8.1 &nbsp;·&nbsp; Vereist: opwekkolom</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">Inclusief eigen PV-gebruik</div>
+        </td>
+        <td><span class="wi-val" id="weiiValFinaal">—</span> <span style="font-size:11px;color:var(--text3)" id="weiiFinaalUnit">kWh/m²</span></td>
+        <td id="weiiFinaalDetails"><span class="wi-na">Vereist opwekkolom + Ag</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">WEiigas
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEiigas — Fossiel brandstofgebruik</div>
+              <div class="tt-d">Energiegebruik door fossiele brandstoffen (aardgas, olie, propaan) per m² per jaar. Stuurt op reductie van directe (scope 1) CO₂-emissies.</div>
+              <code class="tt-f">WEiigas = (Σ E_fossiel − E_uitgesl;fossiel + E_cor;verw) / Ag</code>
+              <div class="tt-s">WEii-protocol v3.1, §8.2 &nbsp;·&nbsp; Vereist: gaskolom + Ag</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">Fossiele brandstoffen</div>
+        </td>
+        <td><span class="wi-val" id="weiiValGas">—</span> <span style="font-size:11px;color:var(--text3)">kWh/m²</span></td>
+        <td id="weiiGasDetails"><span class="wi-na">Vereist gaskolom + Ag</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">WEiiCO₂
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEiiCO₂ — Werkelijke CO₂-intensiteit</div>
+              <div class="tt-d">CO₂-emissie per m² per jaar op basis van vaste landelijke emissiefactoren per energiedrager. Geen weerscorrectie. Factoren worden jaarlijks bijgesteld op WEii.nl.</div>
+              <code class="tt-f">WEiiCO₂ = (C_in − C_uit − C_uitgesl) / Ag</code>
+              <div class="tt-s">WEii-protocol v3.1, §8.3 &nbsp;·&nbsp; kg CO₂/m²·jaar</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">CO₂-emissie per m²</div>
+        </td>
+        <td><span class="wi-val" id="weiiValCO2">—</span> <span style="font-size:11px;color:var(--text3)">kg/m²</span></td>
+        <td id="weiiCO2Details"><span class="wi-na">Vereist Ag</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">CO₂-uitstoot
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">Totale CO₂-emissie &amp; gemiddelde emissiefactor</div>
+              <div class="tt-d">Absolute CO₂-uitstoot over de geanalyseerde periode. De emissiefactor is het gewogen gemiddelde van alle tijdstappen. Bij NED-koppeling wordt de werkelijke uurintensiteit van het Nederlandse net gebruikt.</div>
+              <code class="tt-f">CO₂ (kg) = Σ E_i × EF_i / 1000</code>
+              <div class="tt-s">Elektra: 389 gCO₂/kWh &nbsp;·&nbsp; Warmte: 65 gCO₂/kWh &nbsp;·&nbsp; Gas: 1.884 gCO₂/m³ (WEii v3.1)</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">Absolute uitstoot &amp; emissiefactor</div>
+        </td>
+        <td><span class="wi-val" id="weiiValCO2abs">—</span> <span style="font-size:11px;color:var(--text3)">kg CO₂</span></td>
+        <td id="weiiCO2absDetails"><span class="wi-na">Voer analyse uit</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">WEiibesp
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEiibesparing — Percentuele besparing t.o.v. referentiejaar</div>
+              <div class="tt-d">Procentuele daling van het werkelijk energiegebruik t.o.v. een referentiejaar. Geschikt voor portfoliomonitoring en wettelijke besparingsdoelstellingen.</div>
+              <code class="tt-f">WEiibesparing = (1 − WEii_jaar / WEii_ref) × 100%</code>
+              <div class="tt-s">WEii-protocol v3.1, §8.4 &nbsp;·&nbsp; Voer referentie in hieronder</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">T.o.v. referentiejaar</div>
+          <div class="besp-row">
+            <label style="font-size:11px;color:var(--text3)">Referentie (kWh/m²)</label>
+            <input type="number" id="weiiRef" placeholder="bijv. 145" min="0">
+            <button class="btn btn-secondary" style="padding:4px 10px;font-size:11px;" onclick="calcBesparing()">Berekenen</button>
+          </div>
+        </td>
+        <td><span class="wi-val" id="weiiValBesp">—</span></td>
+        <td id="weiiBesparingDetails"><span class="wi-na">Voer referentie-WEii in</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">WEiidek
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEiidekkingsgraad — Eigen PV-gebruik t.o.v. finaal</div>
+              <div class="tt-d">Aandeel van de direct in het gebouw benutte lokale PV-opwek in het finale energiegebruik. Hoge waarde = veel eigen gebruik, weinig teruglevering aan het net.</div>
+              <code class="tt-f">WEii_dek = (E_opwek − E_terug) / (E_opwek + E_in − E_terug) × 100%</code>
+              <div class="tt-s">WEii-protocol v3.1, §8.5 &nbsp;·&nbsp; Vereist: opwekkolom</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">Eigen PV-gebruik / finaal gebruik</div>
+        </td>
+        <td><span class="wi-val" id="weiiValDek">—</span></td>
+        <td id="weiiDekkingDetails"><span class="wi-na">Vereist opwekkolom</span></td>
+      </tr>
+      <tr>
+        <td>
+          <div class="wi-name">WEiiben
+            <span class="tti" tabindex="0">i<span class="tt">
+              <div class="tt-t">WEiibenuttingsfactor — Eigen gebruik t.o.v. totale opwek</div>
+              <div class="tt-d">Aandeel van het direct benutte deel van de totale lokale opwek. Lage waarde = groot PV-systeem met veel teruglevering aan het net.</div>
+              <code class="tt-f">WEii_ben = (E_opwek − E_terug) / E_opwek × 100%</code>
+              <div class="tt-s">WEii-protocol v3.1, §8.6 &nbsp;·&nbsp; Vereist: opwekkolom</div>
+            </span></span>
+          </div>
+          <div class="wi-sub">Eigen PV-gebruik / totale opwek</div>
+        </td>
+        <td><span class="wi-val" id="weiiValBen">—</span></td>
+        <td id="weiiBenuttingDetails"><span class="wi-na">Vereist opwekkolom</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- Export knoppen -->
+  <div class="export-row" style="display:flex;gap:8px;flex-wrap:wrap;padding-top:20px;margin-top:20px;border-top:1px solid var(--border);">
+    <button class="btn btn-secondary" onclick="downloadJSON()">Download resultaten (JSON)</button>
+    <button class="btn btn-secondary" onclick="downloadCSV()">Download samenvatting (CSV)</button>
+    <button class="btn btn-secondary" onclick="window.print()">Afdrukken / PDF</button>
+    <button class="btn" style="margin-left:auto;" onclick="resetDashboard()">&#8635; Nieuw bestand</button>
+  </div>
+
+</div><!-- /dashboard -->
+
+<div class="loading-overlay hidden" id="loadingOverlay">
+  <div class="loading-inner">
+    <div class="loading-spinner"></div>
+    <p id="loadingMsg" style="font-size:13px;color:var(--text2);margin-top:4px;">Analyseren...</p>
+  </div>
+</div>
+
+<!-- Framework modules (volgorde belangrijk) -->
+<script src="data/ef-data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/upload.js"></script>
+<script src="js/compute.js"></script>
+<script src="js/render.js"></script>
+<script src="js/api-connector.js"></script>
+<script src="js/analysis.js"></script>
+
+</body>
+</html>
